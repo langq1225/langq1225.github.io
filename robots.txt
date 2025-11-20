@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://langq1225.github.io/sitemap.xml
