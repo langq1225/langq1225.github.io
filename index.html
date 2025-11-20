@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Langqing Cui</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Favicon Generator Script (Sets the browser tab icon to the custom logo) -->
+    <script>
+        // Generate an SVG favicon on the fly matching the theme
+        const faviconSvg = `
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+            <rect width="100" height="100" rx="25" fill="#2563eb"/>
+            <text x="50" y="65" font-family="Arial, sans-serif" font-weight="bold" font-size="50" fill="white" text-anchor="middle">LC</text>
+        </svg>`;
+        const faviconUrl = "data:image/svg+xml;base64," + btoa(faviconSvg);
+        const link = document.createElement('link');
+        link.rel = 'icon';
+        link.href = faviconUrl;
+        document.head.appendChild(link);
+    </script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            900: '#1e3a8a',
+                        },
+                        slate: {
+                            850: '#1e293b',
+                        }
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f8fafc;
+            background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+        .dark body {
+            background-color: #0f172a;
+            background-image: radial-gradient(#1e293b 1px, transparent 1px);
+        }
+        
+        /* Glassmorphism utilities */
+        .glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+        .dark .glass {
+            background: rgba(15, 23, 42, 0.8); /* Darker navbar background */
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-link {
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #2563eb;
+            transition: width 0.3s ease-in-out;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="text-slate-800 transition-colors duration-300">
+
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 top-0 glass shadow-sm transition-all duration-300">
+        <div class="max-w-5xl mx-auto px-6 py-3 flex justify-between items-center">
+            
+            <!-- Logo & Title Section -->
+            <a href="#" class="flex items-center gap-3 group">
+                <!-- Flat Modern Logo -->
+                <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-primary-500 to-indigo-600 flex items-center justify-center shadow-md transition-transform duration-300 group-hover:scale-110 group-hover:shadow-lg group-hover:rotate-3">
+                    <span class="text-white font-bold text-sm tracking-tighter leading-none">LC</span>
+                </div>
+                <!-- Text -->
+                <span class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary-600 to-indigo-600 dark:from-primary-400 dark:to-indigo-400">
+                    Langqing Cui
+                </span>
+            </a>
+
+            <div class="hidden md:flex space-x-8 text-sm font-medium text-slate-600 dark:text-slate-300">
+                <a href="#about" class="nav-link hover:text-primary-600 transition-colors">About</a>
+                <a href="#news" class="nav-link hover:text-primary-600 transition-colors">News</a>
+                <a href="#publications" class="nav-link hover:text-primary-600 transition-colors">Publications</a>
+                <a href="#experience" class="nav-link hover:text-primary-600 transition-colors">Experience</a>
+            </div>
+            
+            <!-- Dark Mode Toggle -->
+            <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors text-slate-600 dark:text-slate-400" aria-label="Toggle Dark Mode">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <main class="max-w-5xl mx-auto px-6 pt-24 pb-20 space-y-20">
+        
+        <!-- Hero Section -->
+        <section id="about" class="opacity-0 animate-fade-in-up scroll-mt-14 md:scroll-mt-20">
+            <div class="bg-white dark:bg-slate-800/80 rounded-3xl p-8 md:p-12 shadow-xl border border-white/20 dark:border-slate-700 relative overflow-hidden">
+                <!-- Decorative Background Blob -->
+                <div class="absolute top-0 right-0 -mt-20 -mr-20 w-64 h-64 bg-primary-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10 dark:opacity-20 animate-pulse-slow"></div>
+                <div class="absolute bottom-0 left-0 -mb-20 -ml-20 w-64 h-64 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10 dark:opacity-20 animate-pulse-slow" style="animation-delay: 1s;"></div>
+
+                <div class="relative z-10 flex flex-col md:flex-row gap-10 items-start">
+                    <!-- Profile Image with Ring -->
+                    <div class="relative group mx-auto md:mx-0">
+                        <div class="absolute -inset-1 bg-gradient-to-r from-primary-600 to-indigo-600 rounded-full blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
+                        <div class="relative w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden border-4 border-white dark:border-slate-800 shadow-lg">
+                            <img src="./images/me.jpg" 
+                                 alt="Langqing Cui" 
+                                 class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500"
+                                 onerror="this.src='https://ui-avatars.com/api/?name=Langqing+Cui&background=0D8ABC&color=fff&size=256'">
+                        </div>
+                    </div>
+
+                    <!-- Bio -->
+                    <div class="flex-1 text-center md:text-left space-y-4 w-full">
+                        <div>
+                            <h1 class="text-4xl md:text-5xl font-bold text-slate-900 dark:text-slate-100 tracking-tight mb-2">
+                                Langqing Cui <span class="text-2xl font-normal text-slate-500 ml-2">(崔朗清)</span>
+                            </h1>
+                            <p class="text-lg text-primary-600 dark:text-primary-400 font-medium">
+                                M.S. Student in EE @ KAIST
+                            </p>
+                        </div>
+                        
+                        <p class="text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl">
+                            I am a first-year M.S. student in the <a href="https://ee.kaist.ac.kr/en/" class="text-primary-600 hover:underline decoration-2 underline-offset-2">School of Electrical Engineering</a> at KAIST (Korea Advanced Institute of Science and Technology), advised by Prof. <a href="https://insuhan.github.io/" class="text-primary-600 hover:underline decoration-2 underline-offset-2">Insu Han</a>. 
+                            Previously, I obtained my B.Eng. in Computer Science and Technology at <a href="https://english.bjut.edu.cn/" class="text-primary-600 hover:underline decoration-2 underline-offset-2">Beijing University of Technology</a>.
+                            <br><br>
+                            I have a broad research interest on <b>Efficient Foundation Models</b>.
+                            Currently, I focus on <b>KV Cache Management</b> and <b>Diffusion Models</b>.
+                        </p>
+
+                        <!-- Buttons -->
+                        <div class="flex flex-col md:items-start items-center pt-2">
+                            <div class="flex flex-wrap justify-center md:justify-start gap-3">
+                                <!-- Contact Button (Toggle) -->
+                                <button onclick="toggleContact()" class="px-5 py-2.5 bg-slate-900 text-white dark:bg-slate-200 dark:text-slate-900 rounded-full font-medium hover:bg-slate-700 dark:hover:bg-white transition-all hover:scale-105 active:scale-95 shadow-md flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-900 dark:focus:ring-slate-400">
+                                    <i class="fas fa-address-card"></i> Contact Me
+                                </button>
+                                
+                                <!-- LinkedIn Button -->
+                                <a href="https://www.linkedin.com/in/langqing-cui/" class="px-5 py-2.5 bg-[#ffffff] dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600 rounded-full font-medium hover:bg-gray-50 dark:hover:bg-slate-700 transition-all hover:scale-105 active:scale-95 shadow-sm flex items-center gap-2">
+                                    <i class="fab fa-linkedin"></i> LinkedIn
+                                </a>
+                            </div>
+
+                            <!-- Collapsible Contact Info -->
+                            <div id="contact-info" class="w-full max-w-md overflow-hidden transition-all duration-500 ease-in-out max-h-0 opacity-0" style="margin-top: 0px;">
+                                <!-- Inner Card -->
+                                <div class="p-4 bg-slate-50 dark:bg-slate-800/60 rounded-xl border border-slate-200 dark:border-slate-600 text-left mt-2">
+                                    <div class="space-y-3">
+                                        <!-- Email Section -->
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-8 h-8 rounded-full bg-primary-100 dark:bg-primary-900/30 flex items-center justify-center text-primary-600 dark:text-primary-400 shrink-0">
+                                                <i class="fas fa-envelope"></i>
+                                            </div>
+                                            <div class="flex-1">
+                                                <p class="text-xs text-slate-500 dark:text-slate-400 font-semibold uppercase">Email</p>
+                                                <p class="text-slate-800 dark:text-slate-200 text-sm break-all font-medium">
+                                                    langqing [dot] cui [at] outlook [dot] com
+                                                </p>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Address Section -->
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-8 h-8 rounded-full bg-primary-100 dark:bg-primary-900/30 flex items-center justify-center text-primary-600 dark:text-primary-400 shrink-0">
+                                                <i class="fas fa-map-marker-alt"></i>
+                                            </div>
+                                            <div class="flex-1">
+                                                <p class="text-xs text-slate-500 dark:text-slate-400 font-semibold uppercase">Address</p>
+                                                <p class="text-slate-800 dark:text-slate-200 text-sm font-medium">
+                                                    N1 917, 291 Daehak-ro, Daejeon, South Korea
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- News Section (Timeline) -->
+        <section id="news" class="animate-fade-in-up scroll-mt-14 md:scroll-mt-20" style="animation-delay: 0.1s;">
+            <div class="flex items-center gap-3 mb-8">
+                <div class="p-2 bg-red-100 dark:bg-red-900/20 rounded-lg text-red-600 dark:text-red-400">
+                    <i class="fas fa-bullhorn"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-100">Latest News</h2>
+            </div>
+            
+            <div class="relative border-l-2 border-slate-200 dark:border-slate-700 ml-3 space-y-8 py-2">
+                <!-- News Item -->
+                <div class="relative pl-8 group">
+                    <div class="absolute -left-[9px] top-2 w-4 h-4 bg-white dark:bg-slate-800 border-2 border-primary-500 rounded-full group-hover:scale-125 transition-transform"></div>
+                    <div class="flex flex-col sm:flex-row gap-1 sm:gap-4 sm:items-baseline">
+                        <span class="font-mono text-sm font-bold text-slate-400">Sep 2025</span>
+                        <span class="text-slate-700 dark:text-slate-300">
+                            Joined <b>FlexML Lab</b> at <b>KAIST EE</b>!
+                        </span>
+                    </div>
+                </div>
+                <!-- News Item -->
+                <div class="relative pl-8 group">
+                    <div class="absolute -left-[9px] top-2 w-4 h-4 bg-white dark:bg-slate-800 border-2 border-red-500 rounded-full group-hover:scale-125 transition-transform"></div>
+                    <div class="flex flex-col sm:flex-row gap-1 sm:gap-4 sm:items-baseline">
+                        <span class="font-mono text-sm font-bold text-slate-400">Jun 2025</span>
+                        <span class="text-slate-700 dark:text-slate-300">
+                            Graduated from <b>Beijing University of Technology</b> 🎉
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Publications Section (Cards) -->
+        <section id="publications" class="animate-fade-in-up scroll-mt-14 md:scroll-mt-20" style="animation-delay: 0.2s;">
+            <div class="flex items-center gap-3 mb-8">
+                <div class="p-2 bg-blue-100 dark:bg-blue-900/20 rounded-lg text-primary-600 dark:text-primary-400">
+                    <i class="fas fa-book-open"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-100">Publications</h2>
+            </div>
+
+            <div class="bg-white dark:bg-slate-800/80 p-8 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 text-center">
+                <div class="inline-block p-4 rounded-full bg-slate-50 dark:bg-slate-700/50 mb-4">
+                    <i class="fas fa-rocket text-2xl text-slate-400"></i>
+                </div>
+                <h3 class="text-lg font-medium text-slate-900 dark:text-white mb-2">Research in Progress</h3>
+                <p class="text-slate-500 dark:text-slate-400 max-w-lg mx-auto">
+                    Unfortunately, 0 papers have been published... yet!
+            </div>
+
+            <!-- 
+                ================================================================
+                TODO: UNCOMMENT THE BLOCK BELOW WHEN YOU HAVE PUBLICATIONS
+                ================================================================
+            -->
+            
+            <!-- 
+            <div class="grid grid-cols-1 gap-6 mt-8">
+                
+                <div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm hover:shadow-md border border-slate-100 dark:border-slate-700 transition-all flex flex-col md:flex-row gap-6 group">
+                    <div class="w-full md:w-48 h-32 bg-slate-100 dark:bg-slate-700 rounded-lg overflow-hidden flex-shrink-0 relative">
+                        <img src="https://via.placeholder.com/300x200?text=Research+Paper" alt="Paper Teaser" class="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="text-xl font-bold text-slate-900 dark:text-white leading-tight mb-2 group-hover:text-primary-600 transition-colors">
+                            <a href="#">Title of Your Amazing Paper</a>
+                        </h3>
+                        <p class="text-slate-600 dark:text-slate-400 text-sm mb-3">
+                            <span class="font-semibold text-slate-900 dark:text-slate-200">Langqing Cui</span>, Co-author A, Co-author B, Advisor Name
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-2 py-1 bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 text-xs font-bold rounded border border-primary-100 dark:border-primary-800">
+                                Conference Name 202X
+                            </span>
+                        </div>
+                        <div class="flex gap-3">
+                            <a href="#" class="text-sm font-medium text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors flex items-center gap-1"><i class="far fa-file-pdf"></i> PDF</a>
+                            <a href="#" class="text-sm font-medium text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors flex items-center gap-1"><i class="fab fa-github"></i> Code</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div> 
+            -->
+            <!-- ================================================================ -->
+
+        </section>
+
+        <!-- Grid: Education & Experience -->
+        <div class="grid md:grid-cols-2 gap-8 animate-fade-in-up" style="animation-delay: 0.3s;">
+            
+            <!-- Experience -->
+            <section id="experience" class="bg-white dark:bg-slate-800/80 p-8 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 scroll-mt-14 md:scroll-mt-20">
+                <div class="flex items-center gap-3 mb-6">
+                     <div class="p-2 bg-purple-100 dark:bg-purple-900/20 rounded-lg text-purple-600 dark:text-purple-400">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <h2 class="text-xl font-bold text-slate-900 dark:text-slate-100">Experience</h2>
+                </div>
+                
+                <div class="space-y-6">
+                    <!-- Experience Item 1: KAIST -->
+                    <div class="flex gap-4 items-start">
+                         <!-- Logo/Icon Container -->
+                         <div class="w-10 h-10 rounded bg-slate-50 dark:bg-slate-700/50 flex items-center justify-center flex-shrink-0 overflow-hidden relative border border-slate-100 dark:border-slate-600">
+                             <!-- Fallback Text -->
+                             <span class="text-xs font-bold text-slate-500 dark:text-slate-400">K</span>
+                             
+                             <!-- Logo Image -->
+                             <img src="./images/kaist_ee_logo.png" 
+                                  alt="KAIST Logo" 
+                                  class="absolute inset-0 w-full h-full object-contain bg-white dark:bg-slate-800 p-0.5"
+                                  onerror="this.style.display='none'">
+                         </div>
+                         
+                         <div>
+                             <h4 class="font-bold text-slate-900 dark:text-slate-100">School of Electrical Engineering, KAIST</h4>
+                             <div class="text-sm text-slate-500 dark:text-slate-400 mb-1">Research Assistant • Sep 2025 - Present</div>
+                             <p class="text-sm text-slate-600 dark:text-slate-300">Supervised by Prof. <a href="https://insuhan.github.io/" class="text-primary-600 hover:underline decoration-2 underline-offset-2">Insu Han</a>.</p>
+                         </div>
+                    </div>
+
+                    <!-- Experience Item 2: BJUT -->
+                    <div class="flex gap-4 items-start">
+                         <!-- Logo/Icon Container -->
+                         <div class="w-10 h-10 rounded bg-slate-50 dark:bg-slate-700/50 flex items-center justify-center flex-shrink-0 overflow-hidden relative border border-slate-100 dark:border-slate-600">
+                             <!-- Fallback Text -->
+                             <span class="text-xs font-bold text-slate-500 dark:text-slate-400">B</span>
+                             
+                             <!-- Logo Image -->
+                             <img src="./images/bjut_logo.png" 
+                                  alt="BJUT Logo" 
+                                  class="absolute inset-0 w-full h-full object-contain bg-white dark:bg-slate-800 p-0.5"
+                                  onerror="this.style.display='none'">
+                         </div>
+
+                         <div>
+                             <h4 class="font-bold text-slate-900 dark:text-slate-100">Beijing University of Technology</h4>
+                             <div class="text-sm text-slate-500 dark:text-slate-400 mb-1">Research Assistant • Nov 2024 - Jun 2025</div>
+                             <p class="text-sm text-slate-600 dark:text-slate-300">Supervised by Prof. <a href="https://scholar.google.com/citations?user=jAc5SHAAAAAJ&hl=en-US" class="text-primary-600 hover:underline decoration-2 underline-offset-2">Tongtong Yuan</a>.
+                         </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Education -->
+            <section class="bg-white dark:bg-slate-800/80 p-8 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700">
+                <div class="flex items-center gap-3 mb-6">
+                     <div class="p-2 bg-emerald-100 dark:bg-emerald-900/20 rounded-lg text-emerald-600 dark:text-emerald-400">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h2 class="text-xl font-bold text-slate-900 dark:text-slate-100">Education</h2>
+                </div>
+                
+                <div class="space-y-6">
+                    <div class="relative pl-6 border-l border-slate-200 dark:border-slate-700">
+                        <div class="absolute -left-[5px] top-2 w-2.5 h-2.5 rounded-full bg-emerald-500"></div>
+                        <h4 class="font-bold text-slate-900 dark:text-slate-100">KAIST</h4>
+                        <div class="text-sm text-slate-600 dark:text-slate-300">M.S. in Electrical Engineering</div>
+                        <div class="text-xs text-slate-400 mt-1">Sep 2025 - Present</div>
+                    </div>
+                    <div class="relative pl-6 border-l border-slate-200 dark:border-slate-700">
+                        <div class="absolute -left-[5px] top-2 w-2.5 h-2.5 rounded-full bg-slate-300 dark:bg-slate-600"></div>
+                        <h4 class="font-bold text-slate-900 dark:text-slate-100">Beijing University of Technology</h4>
+                        <div class="text-sm text-slate-600 dark:text-slate-300">B.Eng. in Computer Science and Technology</div>
+                        <div class="text-xs text-slate-400 mt-1">Sep 2021 - Jun 2025</div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- Footer -->
+        <footer class="text-center py-8 text-slate-500 text-sm">
+            <p>© 2025 Langqing Cui. Built with <i class="fas fa-heart text-red-400 mx-1"></i> and Tailwind CSS.</p>
+        </footer>
+    </main>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed top-24 right-6 transform translate-x-20 opacity-0 transition-all duration-300 z-50 bg-slate-800 text-white px-4 py-3 rounded-lg shadow-lg flex items-center gap-3">
+        <i class="fas fa-check-circle text-green-400"></i>
+        <span class="text-sm font-medium">Copied to clipboard!</span>
+    </div>
+
+    <script>
+        // Toggle Contact Info with Smooth Animation
+        function toggleContact() {
+            const contactInfo = document.getElementById('contact-info');
+            
+            if (contactInfo.style.maxHeight && contactInfo.style.maxHeight !== '0px') {
+                contactInfo.style.maxHeight = '0px';
+                contactInfo.style.opacity = '0';
+                contactInfo.style.marginTop = '0px';
+            } else {
+                contactInfo.style.marginTop = '16px';
+                contactInfo.style.maxHeight = contactInfo.scrollHeight + "px";
+                contactInfo.style.opacity = '1';
+            }
+        }
+
+        // --- Smart Theme Switching Logic Start ---
+        const themeBtn = document.getElementById('theme-toggle');
+        const icon = themeBtn.querySelector('i');
+        
+        // 1. Function to apply theme switching visual effects
+        function applyTheme(isDark) {
+            if (isDark) {
+            document.documentElement.classList.add('dark');
+            icon.classList.replace('fa-moon', 'fa-sun');
+            } else {
+            document.documentElement.classList.remove('dark');
+            icon.classList.replace('fa-sun', 'fa-moon');
+            }
+        }
+
+        // 2. Initialization: Determine which theme to use
+        function getPreferredTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+            // If there is a manually saved preference, use it directly
+            return savedTheme === 'dark';
+            }
+            // Otherwise, follow the system
+            return window.matchMedia('(prefers-color-scheme: dark)').matches;
+        }
+
+        // Apply immediately on page load
+        applyTheme(getPreferredTheme());
+
+        // 3. Click button event (core modification part)
+        themeBtn.addEventListener('click', () => {
+            const isDarkNow = document.documentElement.classList.contains('dark');
+            const targetTheme = !isDarkNow; // The target mode to switch to
+            const systemIsDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            
+            // Apply the new theme
+            applyTheme(targetTheme);
+            
+            // Smart logic:
+            // If the mode the user switches to is the same as the system's current mode, it means the user wants to "return to system"
+            // We clear localStorage to let the website return to "auto mode"
+            if (targetTheme === systemIsDark) {
+            localStorage.removeItem('theme');
+            } else {
+            // Otherwise, the user is "going against the grain" (e.g., system is dark, user insists on light), then record the preference
+            localStorage.setItem('theme', targetTheme ? 'dark' : 'light');
+            }
+        });
+
+        // 4. Listen for system changes
+        // Only follow system changes when the user has not manually overridden (i.e., localStorage is empty)
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+            if (!localStorage.getItem('theme')) {
+            applyTheme(e.matches);
+            }
+        });
+        // --- Smart Theme Switching Logic End ---
+
+        // BibTeX Copy
+        function copyBibtex(id) {
+            const text = document.getElementById(id).value;
+            navigator.clipboard.writeText(text).then(() => {
+                const toast = document.getElementById('toast');
+                toast.classList.remove('translate-x-20', 'opacity-0');
+                setTimeout(() => {
+                    toast.classList.add('translate-x-20', 'opacity-0');
+                }, 2500);
+            });
+        }
+
+        // Dark mode extra styles - Optimized colors for softness
+        const style = document.createElement('style');
+        style.innerHTML = `
+            .dark .bg-white { background-color: #1e293b !important; } 
+            .dark .text-slate-900 { color: #ffffff !important; }
+            .dark .text-slate-800 { color: #f8fafc !important; }
+            .dark .text-slate-700 { color: #f1f5f9 !important; }
+            .dark .text-slate-600 { color: #e2e8f0 !important; }
+            .dark .text-slate-500 { color: #cbd5e1 !important; }
+            .dark .border-slate-100 { border-color: #334155 !important; }
+            .dark .border-slate-200 { border-color: #334155 !important; }
+            .dark .bg-slate-50 { background-color: #0f172a !important; }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
