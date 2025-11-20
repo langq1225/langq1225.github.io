@@ -1,7 +1,9 @@
 import { useState } from 'react';
+import profileImage from '../assets/images/me.jpg';
 
 export default function Hero() {
   const [isContactOpen, setIsContactOpen] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   const toggleContact = () => {
     setIsContactOpen(!isContactOpen);
@@ -25,12 +27,21 @@ export default function Hero() {
           <div className="relative group mx-auto md:mx-0">
             <div className="absolute -inset-1 bg-gradient-to-r from-primary-600 to-indigo-600 rounded-full blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
             <div className="relative w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden border-4 border-white dark:border-slate-800 shadow-lg">
+              {!imageLoaded && (
+                <div className="absolute inset-0 bg-slate-200 dark:bg-slate-700 animate-pulse" />
+              )}
               <img
-                src="/images/me.jpg"
+                src={profileImage}
                 alt="Langqing Cui"
-                className="w-full h-full object-cover transform group-hover:scale-105 transition duration-500"
+                loading="eager"
+                fetchpriority="high"
+                className={`w-full h-full object-cover transform group-hover:scale-105 transition duration-500 ${
+                  imageLoaded ? 'opacity-100' : 'opacity-0'
+                }`}
+                onLoad={() => setImageLoaded(true)}
                 onError={(e) => {
                   e.target.src = 'https://ui-avatars.com/api/?name=Langqing+Cui&background=0D8ABC&color=fff&size=256';
+                  setImageLoaded(true);
                 }}
               />
             </div>

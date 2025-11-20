@@ -68,6 +68,7 @@ export default function Experience() {
               <img
                 src={exp.logo}
                 alt={`${exp.title} Logo`}
+                loading="lazy"
                 className="absolute inset-0 w-full h-full object-contain bg-white dark:bg-slate-800 p-0.5"
                 onError={(e) => {
                   e.target.style.display = 'none';
