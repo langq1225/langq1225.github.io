@@ -7,35 +7,14 @@ ehthumbs.db
 Thumbs.db
 Desktop.ini
 
-# Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# Dependencies
-node_modules/
-
-# Build output
-dist/
-dist-ssr/
-*.local
-
-# Editor directories
 .vscode/
 .idea/
 *.sublime-project
 *.sublime-workspace
-*.swp
-*.swo
-*~
 
-# Image files
 *.psd
 *.ai
 
-# Environment variables
 .env
 .env.local
 
