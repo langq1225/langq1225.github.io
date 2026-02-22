@@ -1,41 +1,268 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Langqing's Blog</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            900: '#1e3a8a',
+                        },
+                    }
+                }
+            }
+        }
+    </script>
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        
+        /* Calendar Styles */
+        .calendar-day {
+            @apply w-10 h-10 md:w-12 md:h-12 flex items-center justify-center text-sm rounded-lg transition-all duration-200;
+        }
+        .calendar-day:hover {
+            @apply bg-primary-100 dark:bg-primary-900/30 cursor-pointer;
+        }
+        .calendar-day.has-post {
+            @apply bg-primary-500 text-white font-semibold;
+        }
+        .calendar-day.has-post:hover {
+            @apply bg-primary-600;
+        }
+        .calendar-day.today {
+            @apply ring-2 ring-primary-500 ring-offset-2 dark:ring-offset-slate-900;
+        }
+        .calendar-day.empty {
+            @apply cursor-default;
+        }
+        
+        /* Dark mode transitions */
+        .dark-transition {
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
     </style>
 </head>
-<body class="bg-slate-900 text-slate-100 min-h-screen">
-    <nav class="border-b border-slate-800">
-        <div class="max-w-3xl mx-auto px-6 py-4">
-            <a href="/" class="text-slate-400 hover:text-white transition-colors">← Back to Home</a>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen dark-transition">
+    <!-- Navbar -->
+    <nav class="border-b border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-slate-900/80 backdrop-blur sticky top-0 z-50">
+        <div class="max-w-5xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="/" class="text-slate-500 dark:text-slate-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors flex items-center gap-2">
+                <i class="fas fa-arrow-left"></i>
+                <span>Back to Home</span>
+            </a>
+            
+            <!-- Theme Toggle -->
+            <button id="theme-toggle" class="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" aria-label="Toggle Dark Mode">
+                <i class="fas fa-moon dark:hidden text-slate-600"></i>
+                <i class="fas fa-sun hidden dark:block text-yellow-400"></i>
+            </button>
         </div>
     </nav>
     
-    <main class="max-w-3xl mx-auto px-6 py-12">
-        <header class="mb-12">
-            <h1 class="text-4xl font-bold mb-3 bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">Langqing's Blog</h1>
-            <p class="text-slate-400">Private thoughts on AI, research, and life</p>
+    <main class="max-w-5xl mx-auto px-6 py-12 space-y-12">
+        <!-- Header -->
+        <header class="text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-3 bg-gradient-to-r from-primary-600 to-indigo-600 bg-clip-text text-transparent">Langqing's Blog</h1>
+            <p class="text-slate-500 dark:text-slate-400 text-lg">Private thoughts on AI, research, and life</p>
         </header>
         
-        <section class="space-y-6">
-            <article class="bg-slate-800/50 rounded-xl p-6 border border-slate-700 hover:border-slate-600 transition-colors">
-                <time class="text-sm text-slate-500">February 22, 2026</time>
-                <h2 class="text-xl font-semibold mt-2 mb-2">
-                    <a href="/blog/posts/welcome.html" class="hover:text-blue-400 transition-colors">Hello, Blog!</a>
-                </h2>
-                <p class="text-slate-400 text-sm">Setting up this private corner for thoughts on research and life</p>
-                <div class="flex gap-2 mt-4">
-                    <span class="text-xs bg-slate-700 px-2 py-1 rounded text-slate-300">meta</span>
-                    <span class="text-xs bg-slate-700 px-2 py-1 rounded text-slate-300">intro</span>
-                </div>
-            </article>
+        <!-- Calendar Section -->
+        <section class="bg-white dark:bg-slate-800/80 rounded-2xl p-6 md:p-8 shadow-lg border border-slate-200 dark:border-slate-700">
+            <div class="flex items-center justify-between mb-6">
+                <button id="prev-month" class="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <h2 id="current-month" class="text-xl font-semibold"></h2>
+                <button id="next-month" class="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+            
+            <!-- Weekday Headers -->
+            <div class="grid grid-cols-7 gap-1 mb-2">
+                <div class="text-center text-xs font-medium text-slate-400 py-2">Sun</div>
+                <div class="text-center text-xs font-medium text-slate-400 py-2">Mon</div>
+                <div class="text-center text-xs font-medium text-slate-400 py-2">Tue</div>
+                <div class="text-center text-xs font-medium text-slate-400 py-2">Wed</div>
+                <div class="text-center text-xs font-medium text-slate-400 py-2">Thu</div>
+                <div class="text-center text-xs font-medium text-slate-400 py-2">Fri</div>
+                <div class="text-center text-xs font-medium text-slate-400 py-2">Sat</div>
+            </div>
+            
+            <!-- Calendar Grid -->
+            <div id="calendar-grid" class="grid grid-cols-7 gap-1"></div>
+            
+            <!-- Selected Date Display -->
+            <div id="selected-date-info" class="mt-6 p-4 bg-slate-50 dark:bg-slate-700/50 rounded-xl hidden">
+                <p class="text-sm text-slate-500 dark:text-slate-400">Selected:</p>
+                <p id="selected-date-text" class="font-medium"></p>
+                <div id="selected-date-posts" class="mt-3 space-y-2"></div>
+            </div>
+        </section>
+        
+        <!-- All Posts Section -->
+        <section>
+            <h2 class="text-2xl font-bold mb-6 flex items-center gap-3">
+                <i class="fas fa-file-lines text-primary-500"></i>
+                <span>All Posts</span>
+            </h2>
+            <div id="posts-list" class="space-y-4">
+                <!-- Posts will be dynamically loaded here -->
+            </div>
         </section>
     </main>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        // Theme Toggle Logic (same as main site)
+        const themeToggle = document.getElementById('theme-toggle');
+        const html = document.documentElement;
+        
+        // Check for saved theme preference or default to dark
+        const savedTheme = localStorage.getItem('blog-theme') || 'dark';
+        if (savedTheme === 'dark') {
+            html.classList.add('dark');
+        }
+        
+        themeToggle.addEventListener('click', () => {
+            html.classList.toggle('dark');
+            const currentTheme = html.classList.contains('dark') ? 'dark' : 'light';
+            localStorage.setItem('blog-theme', currentTheme);
+        });
+        
+        // Calendar Logic
+        const posts = [
+            { date: '2026-02-22', title: 'Hello, Blog!', url: '/blog/posts/welcome.html', tags: ['meta', 'intro'] }
+        ];
+        
+        let currentDate = new Date();
+        let selectedDate = null;
+        
+        function renderCalendar() {
+            const year = currentDate.getFullYear();
+            const month = currentDate.getMonth();
+            
+            const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 
+                              'July', 'August', 'September', 'October', 'November', 'December'];
+            document.getElementById('current-month').textContent = `${monthNames[month]} ${year}`;
+            
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const today = new Date();
+            
+            const grid = document.getElementById('calendar-grid');
+            grid.innerHTML = '';
+            
+            // Empty cells before first day
+            for (let i = 0; i < firstDay; i++) {
+                const empty = document.createElement('div');
+                empty.className = 'calendar-day empty';
+                grid.appendChild(empty);
+            }
+            
+            // Days of the month
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dayEl = document.createElement('div');
+                const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                const hasPost = posts.some(p => p.date === dateStr);
+                const isToday = day === today.getDate() && month === today.getMonth() && year === today.getFullYear();
+                
+                dayEl.className = 'calendar-day';
+                dayEl.textContent = day;
+                
+                if (hasPost) {
+                    dayEl.classList.add('has-post');
+                    dayEl.title = `${posts.filter(p => p.date === dateStr).length} post(s)`;
+                }
+                
+                if (isToday) {
+                    dayEl.classList.add('today');
+                }
+                
+                dayEl.addEventListener('click', () => selectDate(dateStr));
+                grid.appendChild(dayEl);
+            }
+        }
+        
+        function selectDate(dateStr) {
+            selectedDate = dateStr;
+            const dateInfo = document.getElementById('selected-date-info');
+            const dateText = document.getElementById('selected-date-text');
+            const postsContainer = document.getElementById('selected-date-posts');
+            
+            const date = new Date(dateStr);
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            dateText.textContent = date.toLocaleDateString('en-US', options);
+            
+            const datePosts = posts.filter(p => p.date === dateStr);
+            
+            if (datePosts.length > 0) {
+                postsContainer.innerHTML = datePosts.map(p => `
+                    <a href="${p.url}" class="block p-3 bg-white dark:bg-slate-800 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
+                        <h3 class="font-medium text-primary-600 dark:text-primary-400">${p.title}</h3>
+                        <div class="flex gap-2 mt-2">
+                            ${p.tags.map(t => `<span class="text-xs bg-slate-200 dark:bg-slate-600 px-2 py-1 rounded text-slate-600 dark:text-slate-300">${t}</span>`).join('')}
+                        </div>
+                    </a>
+                `).join('');
+            } else {
+                postsContainer.innerHTML = '<p class="text-slate-400 text-sm">No posts for this day</p>';
+            }
+            
+            dateInfo.classList.remove('hidden');
+        }
+        
+        function renderPosts() {
+            const container = document.getElementById('posts-list');
+            if (posts.length === 0) {
+                container.innerHTML = '<p class="text-slate-400">No posts yet.</p>';
+                return;
+            }
+            
+            container.innerHTML = posts.map(p => `
+                <article class="bg-white dark:bg-slate-800/50 rounded-xl p-6 border border-slate-200 dark:border-slate-700 hover:border-primary-500 dark:hover:border-primary-500 transition-colors">
+                    <time class="text-sm text-slate-500 dark:text-slate-400">${new Date(p.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</time>
+                    <h2 class="text-xl font-semibold mt-2 mb-2">
+                        <a href="${p.url}" class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">${p.title}</a>
+                    </h2>
+                    <div class="flex gap-2 mt-4">
+                        ${p.tags.map(t => `<span class="text-xs bg-slate-100 dark:bg-slate-700 px-2 py-1 rounded text-slate-600 dark:text-slate-300">${t}</span>`).join('')}
+                    </div>
+                </article>
+            `).join('');
+        }
+        
+        // Event Listeners
+        document.getElementById('prev-month').addEventListener('click', () => {
+            currentDate.setMonth(currentDate.getMonth() - 1);
+            renderCalendar();
+        });
+        
+        document.getElementById('next-month').addEventListener('click', () => {
+            currentDate.setMonth(currentDate.getMonth() + 1);
+            renderCalendar();
+        });
+        
+        // Initialize
+        renderCalendar();
+        renderPosts();
+    </script>
 </body>
 </html>
