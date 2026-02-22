@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Loading... - Langqing's Blog</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Marked.js for Markdown parsing -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- highlight.js for code syntax highlighting -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/github-dark.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            fontFamily: { sans: ["Plus Jakarta Sans", "sans-serif"] },
+            colors: {
+              primary: {
+                50: "#eff6ff",
+                100: "#dbeafe",
+                200: "#bfdbfe",
+                400: "#60a5fa",
+                500: "#3b82f6",
+                600: "#2563eb",
+                700: "#1d4ed8",
+                800: "#1e40af",
+                900: "#1e3a8a",
+              },
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        font-family: "Plus Jakarta Sans", sans-serif;
+      }
+
+      /* Prose styles for rendered Markdown */
+      .prose {
+        max-width: 65ch;
+        line-height: 1.8;
+      }
+      .prose h1 {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-top: 2.5rem;
+        margin-bottom: 1rem;
+      }
+      .prose h2 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-top: 2rem;
+        margin-bottom: 0.75rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid rgba(100, 116, 139, 0.2);
+      }
+      .prose h3 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-top: 1.5rem;
+        margin-bottom: 0.5rem;
+      }
+      .prose p {
+        margin-bottom: 1rem;
+      }
+      .prose ul,
+      .prose ol {
+        padding-left: 1.5rem;
+        margin-bottom: 1rem;
+      }
+      .prose ul {
+        list-style: disc;
+      }
+      .prose ol {
+        list-style: decimal;
+      }
+      .prose li {
+        margin-bottom: 0.4rem;
+      }
+      .prose hr {
+        border: none;
+        border-top: 1px solid rgba(100, 116, 139, 0.3);
+        margin: 2rem 0;
+      }
+      .prose a {
+        color: #3b82f6;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+      }
+      .prose a:hover {
+        color: #2563eb;
+      }
+      .prose blockquote {
+        border-left: 4px solid #3b82f6;
+        padding-left: 1rem;
+        margin: 1.5rem 0;
+        color: #94a3b8;
+        font-style: italic;
+      }
+      .prose code {
+        background: rgba(100, 116, 139, 0.15);
+        padding: 0.15rem 0.4rem;
+        border-radius: 0.25rem;
+        font-size: 0.85em;
+      }
+      .prose pre {
+        background: #1e293b;
+        color: #e2e8f0;
+        padding: 1.25rem;
+        border-radius: 0.75rem;
+        overflow-x: auto;
+        margin-bottom: 1.5rem;
+      }
+      .prose pre code {
+        background: none;
+        padding: 0;
+        font-size: 0.85rem;
+      }
+      .prose img {
+        border-radius: 0.75rem;
+        max-width: 100%;
+        margin: 1.5rem 0;
+      }
+      .prose strong {
+        font-weight: 600;
+      }
+      .prose table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 1.5rem;
+      }
+      .prose th,
+      .prose td {
+        border: 1px solid rgba(100, 116, 139, 0.3);
+        padding: 0.5rem 0.75rem;
+        text-align: left;
+      }
+      .prose th {
+        font-weight: 600;
+        background: rgba(100, 116, 139, 0.1);
+      }
+
+      /* Dark mode prose overrides */
+      .dark .prose h2 {
+        border-bottom-color: rgba(148, 163, 184, 0.2);
+      }
+      .dark .prose a {
+        color: #60a5fa;
+      }
+      .dark .prose a:hover {
+        color: #93bbfd;
+      }
+      .dark .prose code {
+        background: rgba(148, 163, 184, 0.15);
+      }
+    </style>
+  </head>
+  <body
+    class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen"
+  >
+    <!-- Navbar -->
+    <nav
+      class="border-b border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-slate-900/80 backdrop-blur sticky top-0 z-50 w-full"
+    >
+      <div
+        class="max-w-3xl mx-auto px-6 py-4 flex justify-between items-center"
+      >
+        <a
+          href="/blog/"
+          class="text-slate-500 dark:text-slate-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors flex items-center gap-2 font-medium"
+        >
+          <i class="fas fa-arrow-left"></i>
+          <span>Back to Blog</span>
+        </a>
+        <button
+          id="theme-toggle"
+          class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-all text-slate-600 dark:text-slate-400 active:scale-95"
+          aria-label="Toggle Dark Mode"
+        >
+          <i class="fas fa-moon dark:hidden text-lg"></i>
+          <i class="fas fa-sun hidden dark:block text-lg"></i>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Article Container -->
+    <article class="max-w-3xl mx-auto px-6 py-12">
+      <!-- Header (populated by JS) -->
+      <header id="post-header" class="mb-10">
+        <div
+          id="post-date"
+          class="text-sm text-slate-400 dark:text-slate-500 font-medium"
+        ></div>
+        <h1
+          id="post-title"
+          class="text-3xl md:text-4xl font-bold mt-3 mb-4 text-slate-900 dark:text-white"
+        ></h1>
+        <p
+          id="post-description"
+          class="text-slate-500 dark:text-slate-400 text-lg"
+        ></p>
+        <div id="post-tags" class="flex flex-wrap gap-2 mt-4"></div>
+      </header>
+
+      <!-- Rendered Markdown Content -->
+      <div id="post-content" class="prose text-slate-700 dark:text-slate-300">
+        <div class="flex items-center justify-center py-20">
+          <i class="fas fa-spinner fa-spin text-2xl text-slate-400"></i>
+        </div>
+      </div>
+    </article>
+
+    <script>
+      // Theme
+      const html = document.documentElement;
+      const savedTheme = localStorage.getItem("blog-theme") || "dark";
+      if (savedTheme === "dark") html.classList.add("dark");
+      document.getElementById("theme-toggle").addEventListener("click", () => {
+        html.classList.toggle("dark");
+        localStorage.setItem(
+          "blog-theme",
+          html.classList.contains("dark") ? "dark" : "light",
+        );
+      });
+
+      // Configure marked
+      marked.setOptions({
+        highlight: function (code, lang) {
+          if (lang && hljs.getLanguage(lang)) {
+            return hljs.highlight(code, { language: lang }).value;
+          }
+          return hljs.highlightAuto(code).value;
+        },
+        breaks: true,
+        gfm: true,
+      });
+
+      // Parse YAML frontmatter from markdown
+      function parseFrontmatter(text) {
+        const match = text.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
+        if (!match) return { meta: {}, content: text };
+
+        const meta = {};
+        match[1].split("\n").forEach((line) => {
+          const colonIdx = line.indexOf(":");
+          if (colonIdx === -1) return;
+          const key = line.slice(0, colonIdx).trim();
+          let val = line.slice(colonIdx + 1).trim();
+          // Remove surrounding quotes
+          if (
+            (val.startsWith('"') && val.endsWith('"')) ||
+            (val.startsWith("'") && val.endsWith("'"))
+          ) {
+            val = val.slice(1, -1);
+          }
+          // Parse arrays like ["tag1", "tag2"]
+          if (val.startsWith("[") && val.endsWith("]")) {
+            val = val
+              .slice(1, -1)
+              .split(",")
+              .map((s) => s.trim().replace(/^["']|["']$/g, ""));
+          }
+          meta[key] = val;
+        });
+
+        return { meta, content: match[2] };
+      }
+
+      // Load and render the markdown file
+      async function loadPost() {
+        const params = new URLSearchParams(window.location.search);
+        const file = params.get("file");
+
+        if (!file) {
+          document.getElementById("post-content").innerHTML =
+            '<p class="text-center text-slate-400 py-10">No post specified.</p>';
+          return;
+        }
+
+        try {
+          const res = await fetch(`/blog/content/${file}`);
+          if (!res.ok) throw new Error(`File not found: ${file}`);
+          const text = await res.text();
+          const { meta, content } = parseFrontmatter(text);
+
+          // Populate header
+          if (meta.title) {
+            document.getElementById("post-title").textContent = meta.title;
+            document.title = `${meta.title} - Langqing's Blog`;
+          }
+          if (meta.date) {
+            document.getElementById("post-date").textContent = new Date(
+              meta.date + "T00:00:00",
+            ).toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            });
+          }
+          if (meta.description) {
+            document.getElementById("post-description").textContent =
+              meta.description;
+          }
+          if (meta.tags && Array.isArray(meta.tags)) {
+            document.getElementById("post-tags").innerHTML = meta.tags
+              .map(
+                (t) =>
+                  `<span class="text-xs bg-slate-100 dark:bg-slate-700 px-2.5 py-1 rounded-full text-slate-500 dark:text-slate-400 font-medium">${t}</span>`,
+              )
+              .join("");
+          }
+
+          // Render markdown
+          document.getElementById("post-content").innerHTML =
+            marked.parse(content);
+
+          // Apply syntax highlighting to code blocks
+          document.querySelectorAll("pre code").forEach((block) => {
+            hljs.highlightElement(block);
+          });
+        } catch (err) {
+          document.getElementById("post-content").innerHTML =
+            `<p class="text-center text-red-400 py-10">Error loading post: ${err.message}</p>`;
+        }
+      }
+
+      loadPost();
+    </script>
+  </body>
+</html>
