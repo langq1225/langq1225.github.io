@@ -1,268 +1,432 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" class="scroll-smooth">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Langqing's Blog</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Plus Jakarta Sans', 'sans-serif'],
-                    },
-                    colors: {
-                        primary: {
-                            50: '#eff6ff',
-                            100: '#dbeafe',
-                            500: '#3b82f6',
-                            600: '#2563eb',
-                            700: '#1d4ed8',
-                            900: '#1e3a8a',
-                        },
-                    }
-                }
-            }
-        }
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Plus Jakarta Sans", "sans-serif"],
+            },
+            colors: {
+              primary: {
+                50: "#eff6ff",
+                100: "#dbeafe",
+                200: "#bfdbfe",
+                400: "#60a5fa",
+                500: "#3b82f6",
+                600: "#2563eb",
+                700: "#1d4ed8",
+                800: "#1e40af",
+                900: "#1e3a8a",
+              },
+            },
+          },
+        },
+      };
     </script>
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; }
-        
-        /* Calendar Styles */
-        .calendar-day {
-            @apply w-10 h-10 md:w-12 md:h-12 flex items-center justify-center text-sm rounded-lg transition-all duration-200;
+      body {
+        font-family: "Plus Jakarta Sans", sans-serif;
+      }
+
+      /* Calendar day base */
+      .calendar-day {
+        aspect-ratio: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.8rem;
+        border-radius: 0.5rem;
+        transition: all 0.25s ease;
+        position: relative;
+        margin: 0 auto;
+        width: 100%;
+        max-width: 2.5rem;
+        cursor: pointer;
+      }
+      .calendar-day:hover {
+        transform: scale(1.12);
+      }
+      .calendar-day.empty {
+        cursor: default;
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      /* Smooth scroll-to highlight */
+      .post-highlight {
+        animation: highlight-pulse 1.5s ease-out;
+      }
+      @keyframes highlight-pulse {
+        0% {
+          box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.5);
         }
-        .calendar-day:hover {
-            @apply bg-primary-100 dark:bg-primary-900/30 cursor-pointer;
+        50% {
+          box-shadow: 0 0 0 8px rgba(59, 130, 246, 0.15);
         }
-        .calendar-day.has-post {
-            @apply bg-primary-500 text-white font-semibold;
+        100% {
+          box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
         }
-        .calendar-day.has-post:hover {
-            @apply bg-primary-600;
-        }
-        .calendar-day.today {
-            @apply ring-2 ring-primary-500 ring-offset-2 dark:ring-offset-slate-900;
-        }
-        .calendar-day.empty {
-            @apply cursor-default;
-        }
-        
-        /* Dark mode transitions */
-        .dark-transition {
-            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-        }
+      }
+
+      /* Dark mode transitions */
+      .dark-transition {
+        transition:
+          background-color 0.3s ease,
+          color 0.3s ease,
+          border-color 0.3s ease;
+      }
     </style>
-</head>
-<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen dark-transition">
+  </head>
+  <body
+    class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen dark-transition"
+  >
     <!-- Navbar -->
-    <nav class="border-b border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-slate-900/80 backdrop-blur sticky top-0 z-50">
-        <div class="max-w-5xl mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="/" class="text-slate-500 dark:text-slate-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors flex items-center gap-2">
-                <i class="fas fa-arrow-left"></i>
-                <span>Back to Home</span>
-            </a>
-            
-            <!-- Theme Toggle -->
-            <button id="theme-toggle" class="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" aria-label="Toggle Dark Mode">
-                <i class="fas fa-moon dark:hidden text-slate-600"></i>
-                <i class="fas fa-sun hidden dark:block text-yellow-400"></i>
-            </button>
-        </div>
+    <nav
+      class="border-b border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-slate-900/80 backdrop-blur sticky top-0 z-50 w-full"
+    >
+      <div
+        class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center w-full"
+      >
+        <a
+          href="/"
+          class="text-slate-500 dark:text-slate-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors flex items-center gap-2 font-medium"
+        >
+          <i class="fas fa-arrow-left"></i>
+          <span>Back to Home</span>
+        </a>
+
+        <!-- Theme Toggle -->
+        <button
+          id="theme-toggle"
+          class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-all text-slate-600 dark:text-slate-400 active:scale-95"
+          aria-label="Toggle Dark Mode"
+        >
+          <i class="fas fa-moon dark:hidden text-lg"></i>
+          <i class="fas fa-sun hidden dark:block text-lg"></i>
+        </button>
+      </div>
     </nav>
-    
-    <main class="max-w-5xl mx-auto px-6 py-12 space-y-12">
-        <!-- Header -->
-        <header class="text-center">
-            <h1 class="text-4xl md:text-5xl font-bold mb-3 bg-gradient-to-r from-primary-600 to-indigo-600 bg-clip-text text-transparent">Langqing's Blog</h1>
-            <p class="text-slate-500 dark:text-slate-400 text-lg">Private thoughts on AI, research, and life</p>
-        </header>
-        
-        <!-- Calendar Section -->
-        <section class="bg-white dark:bg-slate-800/80 rounded-2xl p-6 md:p-8 shadow-lg border border-slate-200 dark:border-slate-700">
-            <div class="flex items-center justify-between mb-6">
-                <button id="prev-month" class="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-                <h2 id="current-month" class="text-xl font-semibold"></h2>
-                <button id="next-month" class="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
+
+    <main class="max-w-6xl mx-auto px-6 py-10">
+      <!-- Header -->
+      <header class="text-center w-full mb-10">
+        <h1
+          class="text-4xl md:text-5xl font-bold pb-2 bg-gradient-to-r from-primary-600 to-indigo-600 bg-clip-text text-transparent inline-block"
+        >
+          Langqing's Blog
+        </h1>
+      </header>
+
+      <!-- Two-column layout: Posts left, Calendar right -->
+      <div class="flex flex-col-reverse lg:flex-row gap-8 items-start">
+        <!-- Left: All Posts -->
+        <section class="flex-1 w-full min-w-0">
+          <h2
+            class="text-xl font-bold mb-6 flex items-center gap-3 text-slate-800 dark:text-white"
+          >
+            <div
+              class="w-9 h-9 rounded-lg bg-primary-50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-400 flex items-center justify-center text-sm"
+            >
+              <i class="fas fa-file-lines"></i>
             </div>
-            
+            <span>All Posts</span>
+          </h2>
+          <div id="posts-list" class="space-y-5">
+            <!-- Posts will be dynamically loaded here -->
+          </div>
+        </section>
+
+        <!-- Right: Sticky Calendar -->
+        <aside class="w-full lg:w-80 lg:flex-shrink-0 lg:sticky lg:top-24">
+          <div
+            class="bg-white dark:bg-slate-800 rounded-2xl p-5 shadow-lg border border-slate-200/60 dark:border-slate-700/60 transition-colors duration-300"
+          >
+            <!-- Month Navigation -->
+            <div class="flex items-center justify-between mb-5">
+              <button
+                id="prev-month"
+                class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-400 hover:text-slate-800 dark:hover:text-slate-100 transition-all active:scale-90 text-xs"
+              >
+                <i class="fas fa-chevron-left"></i>
+              </button>
+              <h2
+                id="current-month"
+                class="text-base font-bold text-slate-800 dark:text-white"
+              ></h2>
+              <button
+                id="next-month"
+                class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-400 hover:text-slate-800 dark:hover:text-slate-100 transition-all active:scale-90 text-xs"
+              >
+                <i class="fas fa-chevron-right"></i>
+              </button>
+            </div>
+
             <!-- Weekday Headers -->
             <div class="grid grid-cols-7 gap-1 mb-2">
-                <div class="text-center text-xs font-medium text-slate-400 py-2">Sun</div>
-                <div class="text-center text-xs font-medium text-slate-400 py-2">Mon</div>
-                <div class="text-center text-xs font-medium text-slate-400 py-2">Tue</div>
-                <div class="text-center text-xs font-medium text-slate-400 py-2">Wed</div>
-                <div class="text-center text-xs font-medium text-slate-400 py-2">Thu</div>
-                <div class="text-center text-xs font-medium text-slate-400 py-2">Fri</div>
-                <div class="text-center text-xs font-medium text-slate-400 py-2">Sat</div>
+              <div
+                class="text-center text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider py-1"
+              >
+                S
+              </div>
+              <div
+                class="text-center text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider py-1"
+              >
+                M
+              </div>
+              <div
+                class="text-center text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider py-1"
+              >
+                T
+              </div>
+              <div
+                class="text-center text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider py-1"
+              >
+                W
+              </div>
+              <div
+                class="text-center text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider py-1"
+              >
+                T
+              </div>
+              <div
+                class="text-center text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider py-1"
+              >
+                F
+              </div>
+              <div
+                class="text-center text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider py-1"
+              >
+                S
+              </div>
             </div>
-            
+
             <!-- Calendar Grid -->
             <div id="calendar-grid" class="grid grid-cols-7 gap-1"></div>
-            
-            <!-- Selected Date Display -->
-            <div id="selected-date-info" class="mt-6 p-4 bg-slate-50 dark:bg-slate-700/50 rounded-xl hidden">
-                <p class="text-sm text-slate-500 dark:text-slate-400">Selected:</p>
-                <p id="selected-date-text" class="font-medium"></p>
-                <div id="selected-date-posts" class="mt-3 space-y-2"></div>
+
+            <!-- Legend -->
+            <div
+              class="mt-4 pt-4 border-t border-slate-100 dark:border-slate-700 flex items-center gap-4 text-[10px] text-slate-400 dark:text-slate-500"
+            >
+              <div class="flex items-center gap-1.5">
+                <span
+                  class="inline-block w-3 h-3 rounded bg-blue-50 dark:bg-blue-900/30 ring-1 ring-blue-200 dark:ring-blue-800"
+                ></span>
+                <span>Has post</span>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <span
+                  class="inline-block w-3 h-3 rounded ring-2 ring-blue-500"
+                ></span>
+                <span>Today</span>
+              </div>
             </div>
-        </section>
-        
-        <!-- All Posts Section -->
-        <section>
-            <h2 class="text-2xl font-bold mb-6 flex items-center gap-3">
-                <i class="fas fa-file-lines text-primary-500"></i>
-                <span>All Posts</span>
-            </h2>
-            <div id="posts-list" class="space-y-4">
-                <!-- Posts will be dynamically loaded here -->
-            </div>
-        </section>
+          </div>
+        </aside>
+      </div>
     </main>
-    
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <script>
-        // Theme Toggle Logic (same as main site)
-        const themeToggle = document.getElementById('theme-toggle');
-        const html = document.documentElement;
-        
-        // Check for saved theme preference or default to dark
-        const savedTheme = localStorage.getItem('blog-theme') || 'dark';
-        if (savedTheme === 'dark') {
-            html.classList.add('dark');
-        }
-        
-        themeToggle.addEventListener('click', () => {
-            html.classList.toggle('dark');
-            const currentTheme = html.classList.contains('dark') ? 'dark' : 'light';
-            localStorage.setItem('blog-theme', currentTheme);
-        });
-        
-        // Calendar Logic
-        const posts = [
-            { date: '2026-02-22', title: 'Hello, Blog!', url: '/blog/posts/welcome.html', tags: ['meta', 'intro'] }
+      // Theme Toggle Logic
+      const themeToggle = document.getElementById("theme-toggle");
+      const html = document.documentElement;
+
+      const savedTheme = localStorage.getItem("blog-theme") || "dark";
+      if (savedTheme === "dark") {
+        html.classList.add("dark");
+      }
+
+      themeToggle.addEventListener("click", () => {
+        html.classList.toggle("dark");
+        const currentTheme = html.classList.contains("dark") ? "dark" : "light";
+        localStorage.setItem("blog-theme", currentTheme);
+      });
+
+      // Blog Posts Data
+      const posts = [
+        {
+          date: "2026-02-22",
+          title: "Hello, Blog!",
+          url: "/blog/posts/welcome.html",
+          tags: ["meta", "intro"],
+        },
+      ];
+
+      let currentDate = new Date();
+
+      // ── Calendar ──────────────────────────────
+      function renderCalendar() {
+        const year = currentDate.getFullYear();
+        const month = currentDate.getMonth();
+
+        const monthNames = [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+          "August",
+          "September",
+          "October",
+          "November",
+          "December",
         ];
-        
-        let currentDate = new Date();
-        let selectedDate = null;
-        
-        function renderCalendar() {
-            const year = currentDate.getFullYear();
-            const month = currentDate.getMonth();
-            
-            const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 
-                              'July', 'August', 'September', 'October', 'November', 'December'];
-            document.getElementById('current-month').textContent = `${monthNames[month]} ${year}`;
-            
-            const firstDay = new Date(year, month, 1).getDay();
-            const daysInMonth = new Date(year, month + 1, 0).getDate();
-            const today = new Date();
-            
-            const grid = document.getElementById('calendar-grid');
-            grid.innerHTML = '';
-            
-            // Empty cells before first day
-            for (let i = 0; i < firstDay; i++) {
-                const empty = document.createElement('div');
-                empty.className = 'calendar-day empty';
-                grid.appendChild(empty);
-            }
-            
-            // Days of the month
-            for (let day = 1; day <= daysInMonth; day++) {
-                const dayEl = document.createElement('div');
-                const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-                const hasPost = posts.some(p => p.date === dateStr);
-                const isToday = day === today.getDate() && month === today.getMonth() && year === today.getFullYear();
-                
-                dayEl.className = 'calendar-day';
-                dayEl.textContent = day;
-                
-                if (hasPost) {
-                    dayEl.classList.add('has-post');
-                    dayEl.title = `${posts.filter(p => p.date === dateStr).length} post(s)`;
-                }
-                
-                if (isToday) {
-                    dayEl.classList.add('today');
-                }
-                
-                dayEl.addEventListener('click', () => selectDate(dateStr));
-                grid.appendChild(dayEl);
-            }
+        document.getElementById("current-month").textContent =
+          `${monthNames[month]} ${year}`;
+
+        const firstDay = new Date(year, month, 1).getDay();
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+        const today = new Date();
+
+        const grid = document.getElementById("calendar-grid");
+        grid.innerHTML = "";
+
+        // Limit next month button
+        const nextBtn = document.getElementById("next-month");
+        if (year === today.getFullYear() && month >= today.getMonth()) {
+          nextBtn.classList.add("opacity-30", "cursor-not-allowed");
+          nextBtn.disabled = true;
+        } else {
+          nextBtn.classList.remove("opacity-30", "cursor-not-allowed");
+          nextBtn.disabled = false;
         }
-        
-        function selectDate(dateStr) {
-            selectedDate = dateStr;
-            const dateInfo = document.getElementById('selected-date-info');
-            const dateText = document.getElementById('selected-date-text');
-            const postsContainer = document.getElementById('selected-date-posts');
-            
-            const date = new Date(dateStr);
-            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-            dateText.textContent = date.toLocaleDateString('en-US', options);
-            
-            const datePosts = posts.filter(p => p.date === dateStr);
-            
-            if (datePosts.length > 0) {
-                postsContainer.innerHTML = datePosts.map(p => `
-                    <a href="${p.url}" class="block p-3 bg-white dark:bg-slate-800 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
-                        <h3 class="font-medium text-primary-600 dark:text-primary-400">${p.title}</h3>
-                        <div class="flex gap-2 mt-2">
-                            ${p.tags.map(t => `<span class="text-xs bg-slate-200 dark:bg-slate-600 px-2 py-1 rounded text-slate-600 dark:text-slate-300">${t}</span>`).join('')}
-                        </div>
-                    </a>
-                `).join('');
-            } else {
-                postsContainer.innerHTML = '<p class="text-slate-400 text-sm">No posts for this day</p>';
-            }
-            
-            dateInfo.classList.remove('hidden');
+
+        // Empty cells before first day
+        for (let i = 0; i < firstDay; i++) {
+          const empty = document.createElement("div");
+          empty.className = "calendar-day empty";
+          grid.appendChild(empty);
         }
-        
-        function renderPosts() {
-            const container = document.getElementById('posts-list');
-            if (posts.length === 0) {
-                container.innerHTML = '<p class="text-slate-400">No posts yet.</p>';
-                return;
+
+        // Days of the month
+        for (let day = 1; day <= daysInMonth; day++) {
+          const dayEl = document.createElement("div");
+          const dateStr = `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+          const dayPosts = posts.filter((p) => p.date === dateStr);
+          const hasPost = dayPosts.length > 0;
+          const isToday =
+            day === today.getDate() &&
+            month === today.getMonth() &&
+            year === today.getFullYear();
+
+          dayEl.className = "calendar-day";
+          dayEl.textContent = day;
+
+          if (hasPost) {
+            dayEl.classList.add(
+              "text-slate-900",
+              "dark:text-white",
+              "font-bold",
+              "bg-blue-50",
+              "dark:bg-blue-900/30",
+              "ring-1",
+              "ring-blue-200",
+              "dark:ring-blue-800",
+              "shadow-sm",
+            );
+            dayEl.title = `${dayPosts.length} post(s)`;
+          } else {
+            dayEl.classList.add("text-slate-300", "dark:text-slate-600");
+          }
+
+          if (isToday) {
+            dayEl.classList.add("ring-2", "ring-blue-500", "font-bold");
+            if (!hasPost) {
+              dayEl.classList.remove("text-slate-300", "dark:text-slate-600");
+              dayEl.classList.add(
+                "text-blue-600",
+                "dark:text-blue-400",
+                "bg-blue-50",
+                "dark:bg-blue-900/20",
+              );
             }
-            
-            container.innerHTML = posts.map(p => `
-                <article class="bg-white dark:bg-slate-800/50 rounded-xl p-6 border border-slate-200 dark:border-slate-700 hover:border-primary-500 dark:hover:border-primary-500 transition-colors">
-                    <time class="text-sm text-slate-500 dark:text-slate-400">${new Date(p.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</time>
-                    <h2 class="text-xl font-semibold mt-2 mb-2">
-                        <a href="${p.url}" class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">${p.title}</a>
-                    </h2>
-                    <div class="flex gap-2 mt-4">
-                        ${p.tags.map(t => `<span class="text-xs bg-slate-100 dark:bg-slate-700 px-2 py-1 rounded text-slate-600 dark:text-slate-300">${t}</span>`).join('')}
-                    </div>
-                </article>
-            `).join('');
+          }
+
+          // Click → scroll to matching post
+          dayEl.addEventListener("click", () => {
+            if (hasPost) {
+              const postEl = document.getElementById(`post-${dateStr}`);
+              if (postEl) {
+                postEl.scrollIntoView({ behavior: "smooth", block: "center" });
+                postEl.classList.remove("post-highlight");
+                void postEl.offsetWidth; // trigger reflow
+                postEl.classList.add("post-highlight");
+              }
+            }
+          });
+
+          grid.appendChild(dayEl);
         }
-        
-        // Event Listeners
-        document.getElementById('prev-month').addEventListener('click', () => {
-            currentDate.setMonth(currentDate.getMonth() - 1);
-            renderCalendar();
-        });
-        
-        document.getElementById('next-month').addEventListener('click', () => {
-            currentDate.setMonth(currentDate.getMonth() + 1);
-            renderCalendar();
-        });
-        
-        // Initialize
+      }
+
+      // ── Posts List ─────────────────────────────
+      function renderPosts() {
+        const container = document.getElementById("posts-list");
+        if (posts.length === 0) {
+          container.innerHTML =
+            '<p class="text-slate-400 dark:text-slate-500 text-center py-10">No posts yet.</p>';
+          return;
+        }
+
+        // Sort posts by date descending
+        const sorted = [...posts].sort(
+          (a, b) => new Date(b.date) - new Date(a.date),
+        );
+
+        container.innerHTML = sorted
+          .map(
+            (p) => `
+              <article id="post-${p.date}" class="bg-white dark:bg-slate-800/50 rounded-xl p-5 border border-slate-200 dark:border-slate-700 hover:border-primary-400 dark:hover:border-primary-500 transition-all duration-300 scroll-mt-24">
+                <time class="text-xs font-medium text-slate-400 dark:text-slate-500">${new Date(p.date + "T00:00:00").toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}</time>
+                <h2 class="text-lg font-semibold mt-1.5 mb-2 text-slate-900 dark:text-white">
+                  <a href="${p.url}" class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">${p.title}</a>
+                </h2>
+                <div class="flex flex-wrap gap-2">
+                  ${p.tags.map((t) => `<span class="text-[11px] bg-slate-100 dark:bg-slate-700 px-2 py-0.5 rounded-full text-slate-500 dark:text-slate-400 font-medium">${t}</span>`).join("")}
+                </div>
+              </article>
+            `,
+          )
+          .join("");
+      }
+
+      // ── Event Listeners ───────────────────────
+      document.getElementById("prev-month").addEventListener("click", () => {
+        currentDate.setMonth(currentDate.getMonth() - 1);
         renderCalendar();
-        renderPosts();
+      });
+
+      document.getElementById("next-month").addEventListener("click", () => {
+        const today = new Date();
+        if (
+          currentDate.getFullYear() === today.getFullYear() &&
+          currentDate.getMonth() >= today.getMonth()
+        ) {
+          return;
+        }
+        currentDate.setMonth(currentDate.getMonth() + 1);
+        renderCalendar();
+      });
+
+      // Initialize
+      renderCalendar();
+      renderPosts();
     </script>
-</body>
+  </body>
 </html>
