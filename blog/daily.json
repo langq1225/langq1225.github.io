@@ -1,0 +1,32 @@
+[
+  {
+    "date": "2026-02-23",
+    "title": "Daily Updates — 2026 年 2 月 23 日",
+    "file": "daily/2026-02-23.md",
+    "summary": "Efficient AI、Diffusion LM 最新论文 + HuggingFace 热门 + 科技新闻"
+  },
+  {
+    "date": "2026-02-23",
+    "title": "arXiv 论文深度解读",
+    "file": "daily/2026-02-23/01-arxiv-papers.md",
+    "summary": "Efficient AI 和 Diffusion Language Models 最新论文详细分析"
+  },
+  {
+    "date": "2026-02-23",
+    "title": "HuggingFace Trending 分析",
+    "file": "daily/2026-02-23/02-hf-trending.md",
+    "summary": "HuggingFace 热门模型和论文趋势分析"
+  },
+  {
+    "date": "2026-02-23",
+    "title": "Efficient AI 研究趋势报告",
+    "file": "daily/2026-02-23/03-efficient-ai-trends.md",
+    "summary": "Efficient AI 领域当前热点、趋势和未来方向分析"
+  },
+  {
+    "date": "2026-02-23",
+    "title": "NanoChat 深度调研报告",
+    "file": "daily/2026-02-23/04-nanochat-report.md",
+    "summary": "全面分析 karpathy/nanochat 项目架构、设计思想和对 Efficient AI 研究的启发"
+  }
+]

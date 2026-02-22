@@ -292,8 +292,7 @@
         }
 
         try {
-          // Use relative path to correctly find the file on GitHub Pages
-          const res = await fetch(`content/${file}`);
+          const res = await fetch(`/blog/content/${file}`);
           if (!res.ok) throw new Error(`File not found: ${file}`);
           const text = await res.text();
           const { meta, content } = parseFrontmatter(text);

@@ -131,35 +131,50 @@
 
       <!-- Two-column layout -->
       <div class="flex flex-col-reverse lg:flex-row gap-8 items-start">
-        <!-- ═══════════ Left: All Posts (with tag filter) ═══════════ -->
+        <!-- ═══════════ Left: Tabbed Content Area ═══════════ -->
         <section class="flex-1 w-full min-w-0">
-          <h2
-            class="text-xl font-bold mb-4 flex items-center gap-3 text-slate-800 dark:text-white"
+          <!-- Tab Switcher -->
+          <div
+            class="flex items-center gap-1 mb-6 bg-slate-100 dark:bg-slate-800 rounded-xl p-1"
           >
-            <div
-              class="w-9 h-9 rounded-lg bg-primary-50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-400 flex items-center justify-center text-sm"
+            <button
+              id="tab-posts"
+              onclick="switchTab('posts')"
+              class="tab-btn flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200"
             >
-              <i class="fas fa-pen-nib"></i>
-            </div>
-            <span>All Posts</span>
-          </h2>
-
-          <!-- Tag Filter Bar -->
-          <div id="tag-filter-bar" class="flex flex-wrap gap-2 mb-5">
-            <!-- Tags rendered dynamically -->
+              <i class="fas fa-pen-nib text-xs"></i>
+              <span>All Posts</span>
+            </button>
+            <button
+              id="tab-daily"
+              onclick="switchTab('daily')"
+              class="tab-btn flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200"
+            >
+              <i class="fas fa-robot text-xs"></i>
+              <span>Daily Updates</span>
+              <span
+                class="text-[9px] font-medium text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/30 px-1.5 py-0.5 rounded"
+                >AI</span
+              >
+            </button>
           </div>
 
-          <!-- Posts List -->
-          <div id="posts-list" class="space-y-5">
-            <!-- Posts rendered dynamically -->
+          <!-- Posts View -->
+          <div id="view-posts">
+            <!-- Tag Filter Bar -->
+            <div id="tag-filter-bar" class="flex flex-wrap gap-2 mb-5"></div>
+            <!-- Posts List -->
+            <div id="posts-list" class="space-y-5"></div>
+          </div>
+
+          <!-- Daily Updates View (hidden by default) -->
+          <div id="view-daily" class="hidden">
+            <div id="daily-updates-list" class="space-y-4"></div>
           </div>
         </section>
 
-        <!-- ═══════════ Right: Calendar + Daily Updates ═══════════ -->
-        <aside
-          class="w-full lg:w-80 lg:flex-shrink-0 lg:sticky lg:top-24 space-y-6"
-        >
-          <!-- Calendar Card -->
+        <!-- ═══════════ Right: Calendar Sidebar ═══════════ -->
+        <aside class="w-full lg:w-80 lg:flex-shrink-0 lg:sticky lg:top-24">
           <div
             class="bg-white dark:bg-slate-800 rounded-2xl p-5 shadow-lg border border-slate-200/60 dark:border-slate-700/60 transition-colors duration-300"
           >
@@ -245,32 +260,6 @@
               </div>
             </div>
           </div>
-
-          <!-- Daily Updates Section (below calendar) -->
-          <div
-            class="bg-white dark:bg-slate-800 rounded-2xl p-5 shadow-lg border border-slate-200/60 dark:border-slate-700/60 transition-colors duration-300"
-          >
-            <h2
-              class="text-base font-bold mb-4 flex items-center gap-2.5 text-slate-800 dark:text-white"
-            >
-              <div
-                class="w-7 h-7 rounded-md bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-xs"
-              >
-                <i class="fas fa-robot"></i>
-              </div>
-              <span>Daily Updates</span>
-              <span
-                class="text-[10px] font-medium text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/30 px-1.5 py-0.5 rounded ml-auto"
-                >AI</span
-              >
-            </h2>
-            <div
-              id="daily-updates-list"
-              class="space-y-3 max-h-[50vh] overflow-y-auto pr-1"
-            >
-              <!-- Daily updates rendered dynamically -->
-            </div>
-          </div>
         </aside>
       </div>
     </main>
@@ -291,40 +280,82 @@
       });
 
       // ══════════════════════════════════════════
-      //  DATA: Regular Posts & Daily Updates
+      //  TAB SWITCHING
       // ══════════════════════════════════════════
 
-      // Regular blog posts (your own written content)
-      // url format: /blog/post.html?file=<filename>.md
-      // The .md file should be placed in /blog/content/
-      const posts = [
-        {
-          date: "2026-02-22",
-          title: "Hello, Blog!",
-          url: "/blog/post.html?file=welcome.md",
-          tags: ["meta", "intro"],
-        },
-        // Add more posts here:
-        // { date: "2026-03-01", title: "...", url: "/blog/post.html?file=my-post.md", tags: ["AI"] },
-      ];
+      let activeTab = "posts";
 
-      // AI Daily Updates (each one is also a blog page, just in a separate list)
-      // Put the .md file in /blog/content/ as well
-      const dailyUpdates = [
-        {
-          date: "2026-02-22",
-          title: "Day 1: Setting up the blog",
-          url: "/blog/post.html?file=welcome.md",
-          summary:
-            "Created the blog infrastructure, set up GitHub Pages deployment, and wrote the first post.",
-        },
-        {
-          date: "2026-02-23",
-          title: "Daily Updates — 2026 年 2 月 23 日",
-          url: "/blog/post.html?file=daily/2026-02-23.md",
-          summary: "Efficient AI、Diffusion LM 最新论文 + HuggingFace 热门 + 科技新闻",
-        },
-      ];
+      function switchTab(tab) {
+        activeTab = tab;
+        const postsView = document.getElementById("view-posts");
+        const dailyView = document.getElementById("view-daily");
+        const tabPosts = document.getElementById("tab-posts");
+        const tabDaily = document.getElementById("tab-daily");
+
+        const activeClasses = [
+          "bg-white",
+          "dark:bg-slate-700",
+          "text-slate-900",
+          "dark:text-white",
+          "shadow-sm",
+        ];
+        const inactiveClasses = [
+          "text-slate-500",
+          "dark:text-slate-400",
+          "hover:text-slate-700",
+          "dark:hover:text-slate-300",
+        ];
+
+        if (tab === "posts") {
+          postsView.classList.remove("hidden");
+          dailyView.classList.add("hidden");
+          activeClasses.forEach((c) => tabPosts.classList.add(c));
+          inactiveClasses.forEach((c) => tabPosts.classList.remove(c));
+          inactiveClasses.forEach((c) => tabDaily.classList.add(c));
+          activeClasses.forEach((c) => tabDaily.classList.remove(c));
+        } else {
+          postsView.classList.add("hidden");
+          dailyView.classList.remove("hidden");
+          activeClasses.forEach((c) => tabDaily.classList.add(c));
+          inactiveClasses.forEach((c) => tabDaily.classList.remove(c));
+          inactiveClasses.forEach((c) => tabPosts.classList.add(c));
+          activeClasses.forEach((c) => tabPosts.classList.remove(c));
+        }
+      }
+
+      // ══════════════════════════════════════════
+      //  DATA: loaded from external JSON files
+      //  - posts.json   → your own written posts
+      //  - daily.json   → AI daily updates
+      //  Each entry has a "file" field (relative to /blog/content/)
+      //  The URL is auto-generated as /blog/post.html?file=<file>
+      // ══════════════════════════════════════════
+
+      let posts = [];
+      let dailyUpdates = [];
+
+      async function loadData() {
+        try {
+          const [postsRes, dailyRes] = await Promise.all([
+            fetch("/blog/posts.json"),
+            fetch("/blog/daily.json"),
+          ]);
+          const postsData = await postsRes.json();
+          const dailyData = await dailyRes.json();
+
+          // Auto-generate url from file field
+          posts = postsData.map((p) => ({
+            ...p,
+            url: `/blog/post.html?file=${p.file}`,
+          }));
+          dailyUpdates = dailyData.map((d) => ({
+            ...d,
+            url: `/blog/post.html?file=${d.file}`,
+          }));
+        } catch (err) {
+          console.error("Failed to load blog data:", err);
+        }
+      }
 
       // ══════════════════════════════════════════
       //  TAG FILTERING
@@ -568,7 +599,7 @@
         const container = document.getElementById("daily-updates-list");
         if (dailyUpdates.length === 0) {
           container.innerHTML =
-            '<p class="text-slate-400 dark:text-slate-500 text-xs text-center py-4">No updates yet.</p>';
+            '<p class="text-slate-400 dark:text-slate-500 text-center py-10">No updates yet.</p>';
           return;
         }
 
@@ -578,14 +609,14 @@
 
         container.innerHTML = sorted
           .map(
-            (d) => `
-          <a id="daily-${d.date}" href="${d.url}" class="block p-3 rounded-lg bg-slate-50 dark:bg-slate-900/50 border border-slate-100 dark:border-slate-700/50 hover:border-emerald-400 dark:hover:border-emerald-600 transition-all scroll-mt-24 group">
-            <div class="flex items-center gap-2 mb-1">
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 flex-shrink-0"></span>
-              <time class="text-[10px] font-medium text-slate-400 dark:text-slate-500">${new Date(d.date + "T00:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric" })}</time>
+            (d, i) => `
+          <a id="daily-${i}" href="${d.url}" class="block bg-white dark:bg-slate-800/50 rounded-xl p-5 border border-slate-200 dark:border-slate-700 hover:border-emerald-400 dark:hover:border-emerald-500 transition-all duration-300 scroll-mt-24 group">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="w-2 h-2 rounded-full bg-emerald-500 flex-shrink-0"></span>
+              <time class="text-xs font-medium text-slate-400 dark:text-slate-500">${new Date(d.date + "T00:00:00").toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}</time>
             </div>
-            <h3 class="text-sm font-semibold text-slate-800 dark:text-slate-100 mb-0.5 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">${d.title}</h3>
-            <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">${d.summary}</p>
+            <h2 class="text-lg font-semibold text-slate-900 dark:text-white mb-1.5 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">${d.title}</h2>
+            <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">${d.summary}</p>
           </a>
         `,
           )
@@ -612,11 +643,16 @@
         renderCalendar();
       });
 
-      // Init
-      renderTagFilter();
-      renderCalendar();
-      renderPosts();
-      renderDailyUpdates();
+      // Init: load data first, then render everything
+      async function init() {
+        await loadData();
+        switchTab("posts"); // set initial active tab
+        renderTagFilter();
+        renderCalendar();
+        renderPosts();
+        renderDailyUpdates();
+      }
+      init();
     </script>
   </body>
 </html>
