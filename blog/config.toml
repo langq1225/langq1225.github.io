@@ -1,0 +1,28 @@
+baseURL = 'https://langq1225.github.io/blog/'
+languageCode = 'en-us'
+title = "Langqing's Blog"
+theme = "hugo-PaperMod"
+
+[params]
+  defaultTheme = "dark"
+  ShowShareButtons = false
+  ShowReadingTime = true
+  ShowPostNavLinks = true
+  ShowBreadCrumbs = false
+  ShowCodeCopyButtons = true
+  ShowWordCount = false
+  ShowRssButtonInSectionTermList = false
+  ShowFullTextinRSS = true
+  ShowToc = true
+  TocOpen = true
+  comments = false
+
+[[menu.main]]
+  name = "Home"
+  url = "/"
+  weight = 1
+
+[[menu.main]]
+  name = "Blog"
+  url = "/blog/"
+  weight = 2
