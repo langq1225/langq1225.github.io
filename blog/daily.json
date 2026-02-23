@@ -28,5 +28,11 @@
     "title": "NanoChat 深度调研报告",
     "file": "daily/2026-02-23/04-nanochat-report.md",
     "summary": "全面分析 karpathy/nanochat 项目架构、设计思想和对 Efficient AI 研究的启发"
+  },
+  {
+    "date": "2026-02-23",
+    "title": "Diffusion LLM 量化方法综述",
+    "file": "daily/2026-02-23/05-dllm-quantization-survey.md",
+    "summary": "Diffusion Language Model 量化技术全面综述，覆盖所有主要方法和论文"
   }
 ]
