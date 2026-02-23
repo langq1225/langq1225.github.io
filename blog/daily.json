@@ -34,5 +34,11 @@
     "title": "Diffusion LLM 量化方法综述",
     "file": "daily/2026-02-23/05-dllm-quantization-survey.md",
     "summary": "Diffusion Language Model 量化技术全面综述，覆盖所有主要方法和论文"
+  },
+  {
+    "date": "2026-02-23",
+    "title": "Diffusion LLM KV Cache 技术综述",
+    "file": "daily/2026-02-23/06-dllm-kv-cache-survey.md",
+    "summary": "dLLM KV Cache 机制全面综述，从 Block Diffusion 到最新 FlashBlock、MAGE"
   }
 ]
