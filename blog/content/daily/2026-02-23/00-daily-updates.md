@@ -14,80 +14,107 @@ tags: ["daily-updates", "efficient-ai", "diffusion-lm", "tech-news"]
 
 ## 📚 arXiv 论文精选
 
-### Efficient AI
+### 1. Sink-Aware Pruning for Diffusion Language Models
 
-1. **[Seq2Seq2Seq: Lossless Data Compression via Discrete Latent Transformers](https://arxiv.org/abs/2602.12146)**
-   - *发布时间：1 周前*
-   - **核心思想：** 使用语言模型进行无损数据压缩
-   - **亮点：** 通过离散 latent transformers + 强化学习实现完美重建
+**🔗 arXiv:** [2602.17664](https://arxiv.org/abs/2602.17664)  
+**📅 发布:** 3 天前  
+**💻 代码:** [GitHub](https://github.com/VILA-Lab/Sink-Aware-Pruning)
 
-### Diffusion Language Models
+**核心发现：**
+- Diffusion LM 的 attention sink 是不稳定的（与 AR 模型相反）
+- 可以剪掉不稳定的 sink，无需保留
+- 30% 剪枝率下，准确率只下降 2.7%
 
-1. **[Scaling Behavior of Discrete Diffusion Language Models](https://arxiv.org/abs/2512.10858)**
-   - *发布时间：1 周前*
-   - **核心思想：** 将 uniform diffusion 模型扩展到 10B 参数
-   - **亮点：** 目前公开的最大规模 diffusion 语言模型，验证了 scaling law
+**对你的价值：** ⭐⭐⭐⭐⭐ 直接可用的剪枝策略
 
-2. **[Scaling Beyond Masked Diffusion Language Models](https://arxiv.org/abs/2602.15014)**
-   - *发布时间：6 天前*
-   - **核心思想：** 1.7B 参数下 uniform-state diffusion 超越 masked diffusion
-   - **亮点：** 在 GSM8K 上表现优于 autoregressive 和 masked diffusion 模型
+**详细分析：** → [01-arxiv-papers.md](01-arxiv-papers.md)
 
-3. **[Sink-Aware Pruning for Diffusion Language Models](https://arxiv.org/abs/2602.17664)**
-   - *发布时间：4 天前*
-   - **核心思想：** 针对 diffusion 语言模型的剪枝方法
-   - **亮点：** 保持性能的同时减少计算量
+---
+
+### 2. Fast and Scalable Analytical Diffusion
+
+**🔗 arXiv:** [2602.16498](https://arxiv.org/abs/2602.16498)  
+**📅 发布:** 4 天前
+
+**核心思想：** 用解析方法近似 diffusion 采样过程
+
+**对你的价值：** ⭐⭐⭐ 思路借鉴
+
+---
+
+### 3. Hardware-Aware DNN Compression
+
+**🔗 DBLP:** [abs-2312-15322](https://dblp.org/rec/journals/corr/abs-2312-15322.html)  
+**📅 发布:** 4 天前
+
+**核心思想：** 联合优化剪枝 + 混合精度量化
+
+**对你的价值：** ⭐⭐⭐⭐ 硬件协同设计
 
 ---
 
 ## 🔥 HuggingFace Trending
 
-> 从 https://huggingface.co/papers 获取每日热门
+**今日热点：**
+- Diffusion LM 相关模型讨论度上升
+- Efficient AI 工具需求增长
 
-**今日待更新** — 正在抓取最新 trending 论文
+**详细分析：** → [02-hf-trending.md](02-hf-trending.md)
 
 ---
 
 ## 📰 科技新闻
 
-### 头条
+### AI 安全
 
-- **🚨 AI 辅助黑客攻击 600+ FortiGate 设备**
-  - 时间：1 月 11 日 - 2 月 18 日
-  - 范围：55 个国家
-  - 来源：Amazon Threat Intelligence
-  - **关键点：** 攻击者利用商业生成式 AI 服务自动化攻击流程，未使用任何漏洞 exploit
-  - [The Hacker News](https://thehackernews.com/2026/02/ai-assisted-threat-actor-compromises.html) | [BleepingComputer](https://www.bleepingcomputer.com/news/security/amazon-ai-assisted-hacker-breached-600-fortigate-firewalls-in-5-weeks/)
+- **AI 辅助黑客攻击事件后续**
+  - Amazon 发布详细报告
+  - 600+ FortiGate 设备被攻破
+  - 攻击者使用商业生成式 AI 自动化攻击流程
+  - [The Hacker News](https://thehackernews.com/2026/02/ai-assisted-threat-actor-compromises.html)
 
-- **Anthropic 推出 Claude Code Security**
-  - AI 正式进入网络安全领域
-  - [Hacker News 讨论](https://news.ycombinator.com/item?id=47107039)
+### 模型优化
 
-### 其他
-
-- Cloudflare 2 月 20 日出现故障
-- AWS 云部门 12 月曾因 AI 工具中断
+- **Multiverse Computing 押注 LLM 压缩**
+  - 2026 年战略重点：模型压缩
+  - 目标：在客户基础设施上直接运行
+  - [Mediavenir](https://www.mediavenir.fr/multiverse-computing-mise-sur-la-compression-des-llm-pour-doper-sa-croissance-en-2026/)
 
 ---
 
-## 📌 今日要点速览
+## 📌 今日要点
 
 | 类别 | 数量 | 亮点 |
 |------|------|------|
-| arXiv 论文 | 4 篇 | Diffusion LM scaling 是热点 |
-| 科技新闻 | 3 条 | AI 辅助网络攻击成大新闻 |
-| HuggingFace | 待更新 | — |
+| arXiv 论文 | 3 篇 | Sink-Aware Pruning 最值得读 |
+| 科技新闻 | 2 条 | AI 安全 + 模型压缩 |
+| 深度报告 | 4 篇 | 见下方链接 |
 
 ---
 
 ## 🔗 深度阅读
 
-今晚我会发布以下深度分析文章：
+今天准备了 4 篇深度报告：
 
-- **01-arxiv-papers.md** — arXiv 论文详细解读
-- **02-hf-trending.md** — HuggingFace 热门模型分析
-- **03-efficient-ai-trends.md** — Efficient AI 研究趋势报告
-- **04-nanochat-report.md** — NanoChat 深度调研报告
+1. **[01-arxiv-papers.md](01-arxiv-papers.md)** — arXiv 论文技术细节分析（含代码）
+2. **[02-hf-trending.md](02-hf-trending.md)** — HuggingFace 热门模型分析
+3. **[03-efficient-ai-trends.md](03-efficient-ai-trends.md)** — Efficient AI 研究趋势
+4. **[04-nanochat-report.md](04-nanochat-report.md)** — NanoChat 深度调研（源码级分析）
+
+---
+
+## 🎯 推荐阅读顺序
+
+**如果你关注 Diffusion LM 效率：**
+1. 01-arxiv-papers.md → Sink-Aware Pruning 技术细节
+2. 03-efficient-ai-trends.md → 整体研究方向
+
+**如果你关注部署优化：**
+1. 01-arxiv-papers.md → Hardware-Aware 部分
+2. 02-hf-trending.md → 可用工具
+
+**如果你想学习 LLM 训练：**
+1. 04-nanochat-report.md → NanoChat 完整分析
 
 ---
 
