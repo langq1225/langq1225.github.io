@@ -1,3 +1,26 @@
+_site
+.bundle
+.DS_store
+.idea
+.jekyll-cache
+.jekyll-metadata
+.ruby-version
+.sass-cache
+.tweet-cache
+.venv
+assets/libs/
+assets/rendercv/rendercv_output/*.typ
+al-folio-upgrade-report.md
+node_modules/
+output/playwright/
+test-results/
+vendor
+
+# Python bytecode from bin/ helper scripts
+__pycache__/
+*.pyc
+
+# project-specific
 .DS_Store
 .DS_Store?
 ._*
@@ -6,16 +29,11 @@
 ehthumbs.db
 Thumbs.db
 Desktop.ini
-
 .vscode/
-.idea/
 *.sublime-project
 *.sublime-workspace
-
 *.psd
 *.ai
-
 .env
 .env.local
-
 backup-old-site/

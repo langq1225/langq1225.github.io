@@ -1,0 +1,80 @@
+# Source for the CV page (_pages/cv.md). That page is currently unpublished —
+# set `published: true` in its front matter to put /cv/ back on the site.
+cv:
+  name: Langqing Cui
+  label: M.S. Student in Electrical Engineering, KAIST
+  email: langqing.cui@outlook.com
+  location: Daejeon, South Korea
+  image: ""
+  summary: M.S. student at KAIST working on efficient AI and AI systems, currently on looped transformers.
+
+  social_networks:
+    - network: GitHub
+      username: langq1225
+    - network: LinkedIn
+      username: langqing-cui
+
+  address:
+    street: 291 Daehak-ro, Yuseong-gu
+    city: Daejeon
+    region: Daejeon
+    postalCode: "34141"
+    countryCode: KR
+
+  sections:
+    Education:
+      - institution: KAIST (Korea Advanced Institute of Science and Technology)
+        location: Daejeon, South Korea
+        url: https://ee.kaist.ac.kr/en/
+        area: Electrical Engineering
+        studyType: M.S.
+        start_date: 2025-09
+        end_date: present
+
+      - institution: Beijing University of Technology
+        location: Beijing, China
+        url: https://english.bjut.edu.cn/
+        area: Computer Science and Technology
+        studyType: B.Eng.
+        start_date: 2021-09
+        end_date: 2025-06
+
+    Experience:
+      - company: School of Electrical Engineering, KAIST
+        position: Research Assistant, FlexML Lab
+        location: Daejeon, South Korea
+        start_date: 2025-09
+        end_date: present
+        summary: Advised by Prof. Insu Han. Research on efficient inference for looped transformers.
+
+      - company: Beijing University of Technology
+        position: Research Assistant
+        location: Beijing, China
+        start_date: 2024-11
+        end_date: 2025-06
+        summary: Advised by Prof. Tongtong Yuan.
+
+    Publications:
+      - title: "LoopSpec: Pipelined Self-Speculative Decoding for Looped Transformers"
+        authors:
+          - SangLyul Cho
+          - Langqing Cui
+          - Sehoon Kim
+          - Dongsu Han
+          - Insu Han
+        publisher: arXiv preprint arXiv:2609.17184
+        releaseDate: 2026-09
+        url: https://arxiv.org/abs/2609.17184
+        summary: Equal contribution with SangLyul Cho; project lead.
+
+    Languages:
+      - name: Chinese
+        summary: "Native speaker"
+
+      - name: English
+        summary: "Fluent"
+
+    Interests:
+      - name: Research
+        icon: fa-solid fa-tag
+        keywords: "Efficient AI, AI Systems, Looped Transformers, Speculative Decoding, LLM Inference"

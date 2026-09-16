@@ -1,0 +1,5 @@
+# Citation counts fetched from Google Scholar by .github/workflows/update-citations.yml
+# (not copied into this repo). Populated automatically once `scholar_userid` is set
+# in _data/socials.yml; left empty for now.
+metadata:
+papers:

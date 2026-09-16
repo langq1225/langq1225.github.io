@@ -1,0 +1,103 @@
+---
+# Only the main Sass file needs front matter (the dashes are enough)
+---
+
+@charset "utf-8";
+
+/* Built-in Sass modules you’ll likely use across partials */
+@use "sass:math";
+@use "sass:string";
+
+/* Configure your design tokens BEFORE loading any of your partials.
+   Make sure `_sass/_variables.scss` declares `$max-content-width: 72rem !default;` */
+@use "variables" with (
+  $max-content-width: {{site.max_width | default: "930px"}}
+);
+
+/* Your project partials — convert these files to `@use "variables";`
+   (or `@use "variables" as *;`) inside each file and qualify variables if needed. */
+@use "themes";
+@use "layout";
+
+// Core styles organized by usage
+@use "typography";
+@use "navbar";
+@use "footer";
+@use "blog";
+@use "publications";
+@use "components";
+@use "utilities";
+
+// Other specialized styles
+@use "tabs";
+@use "teachings";
+@use "typograms";
+
+/******************************************************************************
+ * Local overrides for this site (everything above is al-folio's own main.scss)
+ ******************************************************************************/
+
+// ---------------------------------------------------------------------------
+// Theme colour: KAIST blue instead of al-folio's magenta.
+// The logo navy sampled from assets/img/kaist_ee_logo.png is #223e7e, which is
+// too dark to read as a link on white (10.2:1 — it looks like body text), so the
+// light theme uses a brighter tint of the same hue (hsl 222deg) at 6.6:1.
+// These custom properties are declared by the theme gem's _themes.scss; the
+// rules below come later in the cascade, so they win.
+// ---------------------------------------------------------------------------
+
+:root {
+  --global-theme-color: #2e57b8;
+  --global-hover-color: #1e3f8f; // darkens on hover
+  --global-code-bg-color: rgba(46, 87, 184, 0.07);
+}
+
+html[data-theme="dark"] {
+  // The navy is unreadable on the dark background; use a lighter tint of it.
+  --global-theme-color: #7391d9;
+  --global-hover-color: #9db3e6;
+}
+
+// The profile photo is floated ahead of the page header (see _layouts/about.liquid)
+// so its top edge lines up with the title. Nudge it clear of the fixed navbar.
+.post > .profile.float-right,
+.post > .profile.float-left {
+  margin-top: 0.4rem;
+}
+
+// The theme sizes the profile photo at 30% of the content width; that reads as
+// oversized next to a short bio. Narrow it (the media query matches the gem's).
+@media (min-width: 576px) {
+  .profile {
+    width: 23%;
+  }
+}
+
+// Author lists: al-folio marks my own name with <em> and underlines it. Bold it
+// instead, matching how the name is set everywhere else on the site.
+.publications .author > em {
+  border-bottom: none;
+  font-style: normal;
+  font-weight: bold;
+}
+
+// Key for the *, † and ‡ markers, shown under the "Publications" heading.
+.author-note {
+  margin-top: -0.2rem;
+  margin-bottom: 1rem;
+  color: var(--global-text-color-light);
+  font-size: 0.78rem;
+}
+
+// Pages without a `description` still emit an empty <p>; drop its margin.
+.post-description:empty {
+  display: none;
+}
+
+// The venue badge takes its text colour from --global-card-bg-color, which is
+// white in the light theme but #212529 in the dark one — dark grey on a blue
+// badge. Keep it white in both.
+.publications ol.bibliography li .abbr abbr,
+.publications ol.bibliography li .abbr abbr div {
+  color: #fff !important;
+}
