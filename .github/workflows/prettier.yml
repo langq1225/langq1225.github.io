@@ -20,7 +20,10 @@ jobs:
       - name: Setup Node.js ⚙️
         uses: actions/setup-node@v4
       - name: Install Prettier 💾
-        run: npm install --save-dev --save-exact prettier @shopify/prettier-plugin-liquid
+        # `npm ci` (not `npm install <pkg>@latest`) so the check uses the versions
+        # pinned in package-lock.json. Otherwise a new prettier/liquid-plugin
+        # release reformats files and fails CI on an unrelated commit.
+        run: npm ci
       - name: Prettier Check 🔎
         id: prettier
         run: npx prettier . --check
