@@ -79,10 +79,13 @@ html[data-theme="dark"] {
     order: 1;
   }
 
-  .post-about > .profile {
+  // The theme gives .profile.float-right a 1rem left margin to separate it from
+  // the text it floats beside. Here the photo is full width, so that margin just
+  // pushes it 1rem off centre and over the right edge. Drop it.
+  .post-about > .profile.float-right,
+  .post-about > .profile.float-left {
     order: 2;
-    margin-top: 0.8rem;
-    margin-bottom: 0.5rem;
+    margin: 0.8rem auto 0.5rem;
   }
 
   .post-about > article {
