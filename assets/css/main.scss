@@ -65,6 +65,31 @@ html[data-theme="dark"] {
   margin-top: 0.4rem;
 }
 
+// Below the float breakpoint there is no side-by-side layout, so that same DOM
+// order would stack the photo above the name. Reorder to name -> photo -> bio.
+// (576px is the gem's own breakpoint; floats are ignored on flex items, which is
+// exactly what we want here.)
+@media (max-width: 575.98px) {
+  .post-about {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .post-about > .post-header {
+    order: 1;
+  }
+
+  .post-about > .profile {
+    order: 2;
+    margin-top: 0.8rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .post-about > article {
+    order: 3;
+  }
+}
+
 // The theme sizes the profile photo at 30% of the content width; that reads as
 // oversized next to a short bio. Narrow it (the media query matches the gem's).
 @media (min-width: 576px) {
