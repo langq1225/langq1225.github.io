@@ -9,15 +9,15 @@ Built with [Jekyll](https://jekyllrb.com/) and the [al-folio](https://github.com
 Edit a file, commit, push to `main`. That's it — `.github/workflows/deploy.yml` builds the
 site and publishes it to the `gh-pages` branch, which GitHub Pages serves. Takes ~2 minutes.
 
-| To change                   | Edit                                                                                             |
-| --------------------------- | ------------------------------------------------------------------------------------------------ |
-| Bio / profile photo         | `_pages/about.md`                                                                                |
-| News on the homepage        | add a file to `_news/` (copy an existing one)                                                    |
-| Publications                | `_bibliography/papers.bib`                                                                       |
-| Publication thumbnail       | drop an image in `assets/img/publication_preview/`, then add `preview = {file.png}` to the entry |
-| Email / GitHub / LinkedIn   | `_data/socials.yml`                                                                              |
-| CV contents                 | `_data/cv.yml`                                                                                   |
-| Theme colour, feature flags | `_config.yml`, `assets/css/main.scss`                                                            |
+| To change                           | Edit                                                                                             |
+| ----------------------------------- | ------------------------------------------------------------------------------------------------ |
+| Bio / profile photo                 | `_pages/about.md`                                                                                |
+| News on the homepage                | add a file to `_news/` (copy an existing one)                                                    |
+| Publications                        | `_bibliography/papers.bib`                                                                       |
+| Publication thumbnail               | drop an image in `assets/img/publication_preview/`, then add `preview = {file.png}` to the entry |
+| Email / GitHub / Scholar / LinkedIn | `_data/socials.yml`                                                                              |
+| CV contents                         | `_data/cv.yml`                                                                                   |
+| Theme colour, feature flags         | `_config.yml`, `assets/css/main.scss`                                                            |
 
 Adding a paper: append an entry to `_bibliography/papers.bib`. `selected = {true}` also puts
 it on the homepage. Useful fields: `pdf`, `code`, `website` (renders as "Project Page"),
