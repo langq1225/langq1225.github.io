@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-**LoopSpec** is selected as one of the four **Oral Representation** papers in [NeurIPS 2026 ODI Workshop](https://odi2026.github.io/)! See you in Sydney ✈️
+**LoopSpec** is selected as one of the four **Oral Presentation** papers in [NeurIPS 2026 ODI Workshop](https://odi2026.github.io/)! See you in Sydney ✈️
