@@ -109,6 +109,11 @@ html[data-theme="dark"] {
   font-weight: bold;
 }
 
+.publication-highlight {
+  color: var(--global-theme-color);
+  font-weight: 700;
+}
+
 // Key for the *, † and ‡ markers, shown under the "Publications" heading.
 .author-note {
   margin-top: -0.2rem;
