@@ -49,3 +49,4 @@ when upgrading al-folio, diff them against the gem:
 - `_layouts/bib.liquid` — "Website" button relabelled "Project Page", `hide_date` support
 - `_includes/header.liquid` — full name bold in the navbar
 - `assets/css/main.scss` — KAIST-blue theme colour and small layout tweaks, appended at the end
+- `_sass/_site-typography.scss` — Optimistic AI VF headings, Inter body text and light/dark type hierarchy; see [the typography guide](docs/TYPOGRAPHY.md)

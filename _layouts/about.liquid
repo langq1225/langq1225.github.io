@@ -13,7 +13,7 @@ layout: default
     rounded' %}
         {% endif %}
         {% capture sizes %}(min-width: {{ site.max_width }}) {{ site.max_width | minus: 30 | times: 0.23}}px, (min-width: 576px)
-    23vw, 95vw"{% endcapture %}
+    23vw, 168px{% endcapture %}
         {%
           include figure.liquid loading="eager" path=profile_image_path class=profile_image_class sizes=sizes alt=page.profile.image
           cache_bust=true

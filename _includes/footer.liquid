@@ -1,0 +1,11 @@
+<footer class="sticky-bottom mt-5" role="contentinfo">
+  <div class="container">
+    {% if site.last_updated %}
+      Last updated: {{ site.time | date: '%B %Y' }}.
+    {% endif %}
+    {{ site.footer_text }}
+  </div>
+</footer>
+{% if site.back_to_top %}
+  <script defer src="{{ '/assets/js/back-to-top.js' | relative_url | bust_file_cache }}"></script>
+{% endif %}

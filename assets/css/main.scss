@@ -32,6 +32,7 @@
 @use "tabs";
 @use "teachings";
 @use "typograms";
+@use "site-typography";
 
 /******************************************************************************
  * Local overrides for this site (everything above is al-folio's own main.scss)
@@ -79,13 +80,24 @@ html[data-theme="dark"] {
     order: 1;
   }
 
-  // The theme gives .profile.float-right a 1rem left margin to separate it from
-  // the text it floats beside. Here the photo is full width, so that margin just
-  // pushes it 1rem off centre and over the right edge. Drop it.
+  // Keep the mobile portrait compact and centered below the name, rather than
+  // letting it stretch across the full screen.
   .post-about > .profile.float-right,
   .post-about > .profile.float-left {
     order: 2;
-    margin: 0.8rem auto 0.5rem;
+    width: clamp(144px, 42vw, 168px);
+    max-width: 100%;
+    margin: 0.5rem auto 1.5rem;
+
+    figure {
+      margin-bottom: 0;
+    }
+
+    img {
+      aspect-ratio: 1;
+      object-fit: cover;
+      object-position: 50% 35%;
+    }
   }
 
   .post-about > article {
@@ -101,27 +113,6 @@ html[data-theme="dark"] {
   }
 }
 
-// Author lists: al-folio marks my own name with <em> and underlines it. Bold it
-// instead, matching how the name is set everywhere else on the site.
-.publications .author > em {
-  border-bottom: none;
-  font-style: normal;
-  font-weight: bold;
-}
-
-.publication-highlight {
-  color: var(--global-theme-color);
-  font-weight: 700;
-}
-
-// Key for the *, † and ‡ markers, shown under the "Publications" heading.
-.author-note {
-  margin-top: -0.2rem;
-  margin-bottom: 1rem;
-  color: var(--global-text-color-light);
-  font-size: 0.78rem;
-}
-
 // Pages without a `description` still emit an empty <p>; drop its margin.
 .post-description:empty {
   display: none;
@@ -133,4 +124,53 @@ html[data-theme="dark"] {
 .publications ol.bibliography li .abbr abbr,
 .publications ol.bibliography li .abbr abbr div {
   color: #fff !important;
+}
+
+// Understated section dividers and spacing, matching the reference homepage.
+.post-about > article > h2 {
+  margin-top: 56px;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--global-divider-color);
+
+  &:first-of-type {
+    margin-top: 44px;
+  }
+}
+
+// Keep the compact footer at the bottom of short pages and after longer content.
+body.sticky-bottom-footer {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+body.sticky-bottom-footer > [role="main"] {
+  flex: 1 0 auto;
+}
+
+footer.sticky-bottom {
+  padding-top: 20px;
+  padding-bottom: 24px;
+}
+
+// The reference uses the same back-to-top library with a small grey circle.
+:root #back-to-top {
+  bottom: 30px;
+  right: 30px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+
+  svg {
+    width: 20px;
+    height: 20px;
+    margin: 11px auto 0;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--global-theme-color);
+    outline-offset: 3px;
+  }
 }

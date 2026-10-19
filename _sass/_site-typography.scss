@@ -1,0 +1,216 @@
+// Modern academic typography. See docs/TYPOGRAPHY.md for the design contract.
+@font-face {
+  font-family: "Optimistic AI VF";
+  src:
+    local("Optimistic AI VF"),
+    url("https://static.xx.fbcdn.net/rsrc.php/y4/r/KsNfEF_apC2.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 300 800;
+  font-display: swap;
+}
+
+:root {
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  --font-heading: "Optimistic AI VF", var(--font-sans);
+  --global-text-color: #303640;
+  --global-text-color-light: #6b7280;
+  --type-heading-color: #171c26;
+  --type-secondary-color: #596273;
+  --type-size-name: 2.25rem;
+  --type-size-section: 1.5rem;
+  --type-size-paper: 1.0625rem;
+  --type-size-body: 1rem;
+  --type-size-secondary: 0.9375rem;
+  --type-size-meta: 0.875rem;
+  --type-size-small: 0.8125rem;
+  --type-size-note: 0.75rem;
+}
+
+html[data-theme="dark"] {
+  --global-text-color: #d6dbe5;
+  --global-text-color-light: #939eaf;
+  --type-heading-color: #f3f5f9;
+  --type-secondary-color: #a8b1c2;
+}
+
+body,
+button,
+input,
+select,
+textarea {
+  font-family: var(--font-sans);
+  font-size: var(--type-size-body);
+  font-weight: 400;
+  font-optical-sizing: auto;
+  font-feature-settings:
+    "liga" 1,
+    "calt" 1;
+  line-height: 1.7;
+}
+
+strong,
+b {
+  font-weight: 600;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.navbar-brand.title,
+.navbar-brand.title .font-weight-bold {
+  font-family: var(--font-heading);
+}
+
+.post .post-header .post-title,
+.post .post-header .post-title .font-weight-bold {
+  color: var(--type-heading-color);
+  font-size: var(--type-size-name);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+}
+
+.post .post-header .desc {
+  color: var(--type-secondary-color);
+  font-size: var(--type-size-secondary);
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  line-height: 1.6;
+}
+
+.post article p {
+  line-height: 1.75;
+}
+
+.post-about > article > h2 {
+  color: var(--type-heading-color);
+  font-size: var(--type-size-section);
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: -0.015em;
+}
+
+.navbar.navbar-light .navbar-nav .nav-link {
+  font-size: var(--type-size-meta);
+  font-weight: 500;
+}
+
+.navbar.navbar-light .navbar-nav .nav-item.active > .nav-link {
+  font-weight: 600;
+}
+
+.news table {
+  font-size: var(--type-size-secondary);
+  line-height: 1.7;
+}
+
+.news th[scope="row"] {
+  color: var(--type-secondary-color);
+  font-size: var(--type-size-meta);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.publications h2.bibliography {
+  color: var(--type-secondary-color);
+  font-family: var(--font-sans);
+  font-size: var(--type-size-meta);
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+}
+
+.publications ol.bibliography li {
+  .title {
+    color: var(--type-heading-color);
+    font-family: var(--font-heading);
+    font-size: var(--type-size-paper);
+    font-weight: 600;
+    line-height: 1.5;
+    letter-spacing: -0.005em;
+    margin-bottom: 0.3rem;
+  }
+
+  .author {
+    color: var(--type-secondary-color);
+    font-size: var(--type-size-secondary);
+    font-weight: 400;
+    line-height: 1.65;
+    margin-bottom: 0.3rem;
+
+    > em {
+      color: var(--type-heading-color);
+      border-bottom: none;
+      font-style: normal;
+      font-weight: 600;
+    }
+
+    > span.more-authors {
+      color: var(--type-secondary-color);
+    }
+  }
+
+  .periodical {
+    color: var(--type-secondary-color);
+    font-size: var(--type-size-meta);
+    font-weight: 400;
+    font-style: normal;
+    line-height: 1.7;
+
+    em {
+      color: inherit;
+      font-style: italic;
+    }
+  }
+
+  .links a.btn {
+    font-size: var(--type-size-note);
+    font-weight: 500;
+    line-height: 1.5;
+    padding: 0.3rem 0.65rem;
+    text-transform: none;
+  }
+
+  .abbr abbr {
+    font-size: var(--type-size-note);
+    font-weight: 600;
+    line-height: 1.3;
+  }
+}
+
+.publication-highlight {
+  color: var(--global-theme-color);
+  font-weight: 600;
+}
+
+.post article .author-note,
+.author-note {
+  color: var(--global-text-color-light);
+  font-size: var(--type-size-note);
+  font-weight: 400;
+  line-height: 1.6;
+  margin-top: -0.2rem;
+  margin-bottom: 1rem;
+}
+
+footer.sticky-bottom {
+  color: var(--global-text-color-light);
+  font-size: var(--type-size-small);
+  font-weight: 400;
+  line-height: 1.6;
+
+  .container {
+    color: inherit;
+  }
+}
+
+@media (max-width: 575.98px) {
+  :root {
+    --type-size-name: 2rem;
+    --type-size-section: 1.375rem;
+  }
+}
