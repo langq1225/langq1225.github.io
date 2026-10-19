@@ -1,0 +1,45 @@
+.profile-portrait {
+  position: relative;
+  margin-bottom: 1rem;
+
+  figure {
+    margin-bottom: 0;
+  }
+
+  picture {
+    display: block;
+  }
+}
+
+.profile-fireworks-trigger {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  box-shadow: none;
+  outline: none;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+
+  &:focus-visible {
+    outline: 2px dashed var(--type-secondary-color);
+    outline-offset: 5px;
+  }
+}
+
+.profile-fireworks-canvas {
+  position: fixed;
+  z-index: 1020;
+  pointer-events: none;
+}
+
+@media (max-width: 575.98px) {
+  .profile-portrait {
+    margin-bottom: 0;
+  }
+}

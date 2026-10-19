@@ -14,10 +14,19 @@ layout: default
         {% endif %}
         {% capture sizes %}(min-width: {{ site.max_width }}) {{ site.max_width | minus: 30 | times: 0.23}}px, (min-width: 576px)
     23vw, 168px{% endcapture %}
-        {%
-          include figure.liquid loading="eager" path=profile_image_path class=profile_image_class sizes=sizes alt=page.profile.image
-          cache_bust=true
-        %}
+        <div class="profile-portrait">
+          {%
+            include figure.liquid loading="eager" path=profile_image_path class=profile_image_class sizes=sizes alt=page.profile.image
+            cache_bust=true
+          %}
+          <button
+            class="profile-fireworks-trigger"
+            type="button"
+            aria-label="Celebrate with fireworks"
+            data-crest-arsenal="{{ '/assets/img/easter-eggs/arsenal.svg' | relative_url }}"
+            data-crest-guoan="{{ '/assets/img/easter-eggs/beijing-guoan.svg' | relative_url }}"
+          ></button>
+        </div>
       {% endif %}
       {% if page.profile.more_info %}
         <div class="more-info">{{ page.profile.more_info }}</div>
@@ -79,3 +88,6 @@ layout: default
     {% endif %}
   </article>
 </div>
+{% if page.profile.image %}
+  <script defer src="{{ '/assets/js/profile-fireworks.js' | relative_url | bust_file_cache }}"></script>
+{% endif %}
